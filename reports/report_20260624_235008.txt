@@ -1,0 +1,56 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 23:52:36
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_country              : United Kingdom
+top_product              : REGENCY CAKESTAND 3 TIER
+unique_customers         : 4371
+avg_quantity             : 12.0
+
+Model Accuracy: 0.9197
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary**
+Our e-commerce pipeline has achieved a total revenue of $8,300,065.81, with an average order value of $20.4 and a return rate of 2.19%. The top-performing country is the United Kingdom, and the best-selling product is the REGENCY CAKESTAND 3 TIER. Our return prediction model has achieved high accuracy, but there are concerns regarding the return rate.
+
+**Key Business Insights**
+
+* **Growing Revenue**: With a total revenue of $8,300,065.81, our e-commerce pipeline continues to grow and expand its market share.
+* **Strong Average Order Value**: An average order value of $20.4 indicates that customers are purchasing higher-value items, which can lead to increased revenue.
+* **International Success**: The United Kingdom being the top-performing country demonstrates our ability to successfully penetrate international markets.
+
+**Risk Analysis: Return Rate Concerns**
+
+While our return prediction model has achieved high accuracy (0.9197), the actual return rate of 2.19% is a concern. A higher-than-average return rate can lead to increased costs, reduced customer satisfaction, and potential damage to our brand reputation. It is essential to analyze the underlying causes of this issue and implement strategies to reduce returns.
+
+**Model Performance Assessment**
+
+Our return prediction model has achieved:
+
+* High accuracy (0.9197)
+* Feature importance:
+	+ Stock code encoding: 47.6%
+	+ Country encoding: 4.1%
+	+ Price: 18.9%
+	+ Month: 16.3%
+	+ Day of week: 13%
+
+The classification report indicates that our model has high precision and recall for the "0" class (no returns) but struggles with the "1" class (returns). This suggests that our model is effective in predicting non-returns but needs improvement in predicting actual returns.
+
+**Top 3 Actionable Recommendations**
+
+1. **Return Rate Analysis**: Conduct a thorough analysis of the return rate to identify underlying causes, such as product quality issues, incorrect shipping or labeling, or customer dissatisfaction.
+2. **Product Line Review**: Review our product line and consider removing or revising items with high return rates. This may help reduce overall returns and improve customer satisfaction.
+3. **Predictive Analytics Upgrade**: Enhance the return prediction model by incorporating additional features, such as customer behavior data, order history, or demographic information. This can lead to improved accuracy in predicting actual returns.
+
+By addressing these concerns and implementing strategies to reduce returns, we can maintain a high level of customer satisfaction, minimize costs associated with returns, and continue growing our e-commerce pipeline's revenue.

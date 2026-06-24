@@ -3,10 +3,10 @@ import os
 
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 client = ollama.Client(host=OLLAMA_HOST)
+
 import pandas as pd
 import numpy as np
 import json
-import os
 import mlflow
 import mlflow.sklearn
 from datetime import datetime
@@ -16,22 +16,43 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import LabelEncoder
 
 # ── CONFIG ────────────────────────────────────────────────
-DATA_PATH    = "data/sales_data.csv"
-REPORTS_DIR  = "reports"
-MODEL_NAME   = "llama3.1:8b"
-TIMESTAMP    = datetime.now().strftime("%Y%m%d_%H%M%S")
+DATA_PATH   = "data/data.csv"
+REPORTS_DIR = "reports"
+MODEL_NAME  = "llama3.1:8b"
+TIMESTAMP   = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-mlflow.set_experiment("sales_pipeline")
+mlflow.set_experiment("ecommerce_pipeline")
 
 # ── STEP 1: LOAD & CLEAN ──────────────────────────────────
 def load_and_clean(path):
     print("[1/5] Loading and cleaning data...")
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, encoding="ISO-8859-1")
+
+    # Rename columns
+    df.columns = [c.strip() for c in df.columns]
+    df = df.rename(columns={
+        "InvoiceNo"  : "invoice_no",
+        "StockCode"  : "stock_code",
+        "Description": "description",
+        "Quantity"   : "quantity",
+        "InvoiceDate": "date",
+        "UnitPrice"  : "price",
+        "CustomerID" : "customer_id",
+        "Country"    : "country"
+    })
+
+    # Clean
+    df["returned"] = (df["quantity"] < 0).astype(int)
+    df = df[df["price"] > 0]
+    df.dropna(subset=["customer_id"], inplace=True)
+
     df["date"]        = pd.to_datetime(df["date"])
     df["revenue"]     = df["quantity"] * df["price"]
     df["month"]       = df["date"].dt.month
     df["day_of_week"] = df["date"].dt.dayofweek
-    df.dropna(inplace=True)
+
+
+
     print(f"      {len(df)} records loaded")
     return df
 
@@ -39,26 +60,25 @@ def load_and_clean(path):
 def analyze(df):
     print("[2/5] Analyzing data...")
     return {
-        "total_revenue"    : round(df["revenue"].sum(), 2),
-        "avg_order_value"  : round(df["revenue"].mean(), 2),
-        "total_orders"     : len(df),
-        "return_rate"      : round(df["returned"].mean() * 100, 2),
-        "top_category"     : df.groupby("category")["revenue"].sum().idxmax(),
-        "top_product"      : df.groupby("product")["revenue"].sum().idxmax(),
-        "top_region"       : df.groupby("region")["revenue"].sum().idxmax(),
-        "avg_customer_age" : round(df["customer_age"].mean(), 1),
+        "total_revenue"   : round(df["revenue"].sum(), 2),
+        "avg_order_value" : round(df["revenue"].mean(), 2),
+        "total_orders"    : len(df),
+        "return_rate"     : round(df["returned"].mean() * 100, 2),
+        "top_country"     : df.groupby("country")["revenue"].sum().idxmax(),
+        "top_product"     : df.groupby("description")["revenue"].sum().idxmax(),
+        "unique_customers": int(df["customer_id"].nunique()),
+        "avg_quantity"    : round(df["quantity"].mean(), 1),
     }
 
 # ── STEP 3: TRAIN MODEL ───────────────────────────────────
 def train_model(df):
     print("[3/5] Training return prediction model...")
     le = LabelEncoder()
-    df["product_enc"]  = le.fit_transform(df["product"])
-    df["category_enc"] = le.fit_transform(df["category"])
-    df["region_enc"]   = le.fit_transform(df["region"])
+    df["country_enc"]     = le.fit_transform(df["country"])
+    df["stock_code_enc"]  = le.fit_transform(df["stock_code"].astype(str))
 
-    features = ["product_enc", "category_enc", "region_enc",
-                "quantity", "price", "customer_age", "month", "day_of_week"]
+    features = ["stock_code_enc", "country_enc",
+            "price", "month", "day_of_week"]
 
     X = df[features]
     y = df["returned"]
@@ -68,14 +88,13 @@ def train_model(df):
     )
 
     with mlflow.start_run():
-        clf = RandomForestClassifier(n_estimators=100, random_state=42)
+        clf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1, class_weight="balanced")
         clf.fit(X_train, y_train)
 
         predictions = clf.predict(X_test)
         accuracy    = accuracy_score(y_test, predictions)
         report      = classification_report(y_test, predictions)
 
-        # Log to MLflow
         mlflow.log_param("n_estimators", 100)
         mlflow.log_param("test_size", 0.2)
         mlflow.log_metric("accuracy", accuracy)
@@ -93,17 +112,17 @@ def generate_report(stats, accuracy, report, feature_importance):
     print("[4/5] Generating LLM report...")
     prompt = f"""
 You are a senior data scientist presenting to the CEO.
-Analyze this sales pipeline report and provide executive insights.
+Analyze this e-commerce pipeline report and provide executive insights.
 
 BUSINESS METRICS:
 - Total Revenue: ${stats['total_revenue']:,}
 - Average Order Value: ${stats['avg_order_value']}
 - Total Orders: {stats['total_orders']}
 - Return Rate: {stats['return_rate']}%
-- Top Category: {stats['top_category']}
+- Top Country: {stats['top_country']}
 - Top Product: {stats['top_product']}
-- Top Region: {stats['top_region']}
-- Average Customer Age: {stats['avg_customer_age']}
+- Unique Customers: {stats['unique_customers']}
+- Average Quantity per Order: {stats['avg_quantity']}
 
 RETURN PREDICTION MODEL:
 - Accuracy: {accuracy:.4f}
@@ -120,9 +139,9 @@ Provide a structured executive report with:
 5. Top 3 Actionable Recommendations
 """
     response = client.chat(
-    model=MODEL_NAME,
-    messages=[{"role": "user", "content": prompt}]
-)
+        model=MODEL_NAME,
+        messages=[{"role": "user", "content": prompt}]
+    )
     return response.message.content
 
 # ── STEP 5: SAVE REPORT ───────────────────────────────────

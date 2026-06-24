@@ -56,4 +56,5 @@ python main_pipeline.py
 
 ## Dashboard
 
-Open `http://localhost:8050` after starting the dashboard service.
+Open after starting the dashboard service.
+`http://localhost:8050`
