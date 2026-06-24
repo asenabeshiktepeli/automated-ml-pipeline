@@ -1,0 +1,21 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:23:36
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

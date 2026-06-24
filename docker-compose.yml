@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  pipeline:
+    build: .
+    container_name: data_pipeline_job
+    environment:
+      - OLLAMA_HOST=http://192.168.254.9:11434
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./mlruns:/app/mlruns
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  dashboard:
+    build: .
+    container_name: data_pipeline_dashboard
+    command: ["python", "dashboard.py"]
+    ports:
+      - "8050:8050"
+    environment:
+      - OLLAMA_HOST=http://192.168.254.9:11434
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - pipeline
