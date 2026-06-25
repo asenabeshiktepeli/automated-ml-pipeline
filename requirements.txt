@@ -6,3 +6,5 @@ mlflow
 plotly
 dash
 schedule
+groq
+python-dotenv
