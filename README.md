@@ -1,80 +1,135 @@
 # Automated E-Commerce ML Pipeline
 
-End-to-end automated ML pipeline processing 400K+ real e-commerce transactions with drift monitoring and auto-retraining.
+End-to-end automated ML system processing 400K+ real e-commerce transactions with AI agent, drift monitoring, auto-retraining, and REST API.
 
-## What This Does
+## Architecture
 
-- Loads and cleans 400K+ real e-commerce transactions (Kaggle dataset)
-- Trains a Random Forest model to predict product returns (91.97% accuracy)
-- Tracks every model run with MLflow
-- Generates executive reports using a local LLM (Ollama)
-- Monitors data drift using KS-test statistical analysis
-- Auto-retrains the model when drift is detected or accuracy drops
-- Visualizes everything on a live Plotly Dash dashboard
-- Sends anomaly alerts via alert monitoring system
-- Runs on a schedule — fully automated
-- Fully containerized with Docker
+Data (400K+ records)
+
+↓
+
+ML Pipeline (Random Forest, 91.97% accuracy)
+
+↓
+
+MLflow Experiment Tracking
+
+↓
+
+Drift Monitor → Auto Retrain
+
+↓
+
+FastAPI Model Serving
+
+↓
+
+AI Agent (natural language queries)
+
+↓
+
+Plotly Dash Dashboard + LLM Reports
+
+## Features
+
+- **ML Pipeline** — loads, cleans, and trains on 400K+ real transactions
+- **Return Prediction** — Random Forest classifier, 91.97% accuracy
+- **MLflow Tracking** — every model run logged and versioned
+- **LLM Reporting** — Ollama generates executive reports automatically
+- **Drift Monitoring** — KS-test statistical drift detection
+- **Auto Retraining** — triggers pipeline when drift or accuracy drop detected
+- **FastAPI REST API** — real-time return prediction endpoint
+- **AI Agent** — answer business questions in natural language
+- **Live Dashboard** — Plotly Dash with revenue, returns, trends
+- **Docker** — fully containerized, single command deployment
+- **Scheduler** — automated nightly execution
 
 ## Tech Stack
 
 - Python 3.13
 - scikit-learn — ML modeling
 - MLflow — experiment tracking
-- Ollama (llama3.1:8b) — local LLM reporting
-- Plotly Dash — interactive dashboard
+- Ollama (llama3.1:8b) — local LLM
+- FastAPI + Uvicorn — REST API
+- Plotly Dash — dashboard
 - SciPy — statistical drift detection
 - Docker + Docker Compose — containerization
-- schedule — automated pipeline execution
+- schedule — automation
+
+## Results
+
+| Metric         | Value                    |
+| -------------- | ------------------------ |
+| Dataset        | 400K+ real transactions  |
+| Model Accuracy | 91.97%                   |
+| Return Rate    | 2.19%                    |
+| Total Revenue  | $8.3M                    |
+| Top Market     | United Kingdom (84%)     |
+| Top Product    | REGENCY CAKESTAND 3 TIER |
 
 ## Project Structure
 
 data_pipeline/
 
-├── main_pipeline.py # Core pipeline: load → clean → train → report
+├── main_pipeline.py # Core ML pipeline
 
-├── dashboard.py # Live visual dashboard
+├── dashboard.py # Live Plotly Dash dashboard
 
-├── scheduler.py # Automated nightly execution
+├── scheduler.py # Automated scheduling
 
-├── alert_monitor.py # Anomaly detection and alerting
+├── alert_monitor.py # Anomaly detection
 
-├── drift_monitor.py # Statistical data drift monitoring
+├── drift_monitor.py # Statistical drift monitoring
 
-├── auto_retrain.py # Automatic model retraining
+├── auto_retrain.py # Automatic retraining
 
-├── Dockerfile # Container definition
+├── api.py # FastAPI REST endpoint
 
-├── docker-compose.yml # Multi-service orchestration
+├── agent.py # AI data analysis agent
 
-├── requirements.txt # Dependencies
+├── Dockerfile
 
-└── data/ # Input data (Kaggle e-commerce dataset)
+├── docker-compose.yml
+
+└── requirements.txt
 
 ## Quick Start
 
 ```bash
-# Run with Docker
+# Docker
 docker compose up --build
 
-# Or run locally
+# Local
 pip install -r requirements.txt
 python main_pipeline.py
 
-# Run drift monitor
-python drift_monitor.py
+# Start API
+python api.py
+# → http://localhost:8000/docs
 
-# Run auto retrain check
+# Start Dashboard
+python dashboard.py
+# → http://localhost:8050
+
+# Run AI Agent
+python agent.py
+
+# Check drift & auto retrain
+python drift_monitor.py
 python auto_retrain.py
 ```
 
-## Dashboard
+## API Usage
 
-Open `http://localhost:8050` after starting the dashboard service.
+```bash
+POST http://localhost:8000/predict
+{
+  "stock_code": "85123A",
+  "country": "United Kingdom",
+  "price": 2.55,
+  "month": 6,
+  "day_of_week": 3
+}
 
-## Results
-
-- **Dataset**: 400K+ real e-commerce transactions
-- **Model Accuracy**: 91.97%
-- **Return Rate**: 2.19%
-- **Top Market**: United Kingdom (84.1% of revenue)
-- **Top Product**: REGENCY CAKESTAND 3 TIER
+→ {"prediction": 0, "probability": 0.94, "label": "Not returned"}
+```
