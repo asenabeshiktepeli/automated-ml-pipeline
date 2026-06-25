@@ -1,0 +1,31 @@
+{
+  "timestamp": "20260625_131208",
+  "drift_detected": true,
+  "features": [
+    {
+      "feature": "stock_code_enc",
+      "p_value": 0.0,
+      "drifted": true
+    },
+    {
+      "feature": "country_enc",
+      "p_value": 0.0,
+      "drifted": true
+    },
+    {
+      "feature": "price",
+      "p_value": 0.0,
+      "drifted": true
+    },
+    {
+      "feature": "month",
+      "p_value": 0.0,
+      "drifted": true
+    },
+    {
+      "feature": "day_of_week",
+      "p_value": 0.0,
+      "drifted": true
+    }
+  ]
+}
