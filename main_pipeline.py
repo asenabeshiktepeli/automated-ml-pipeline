@@ -1,8 +1,10 @@
-import ollama
 import os
+from groq import Groq
+from dotenv import load_dotenv
 
-OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-client = ollama.Client(host=OLLAMA_HOST)
+load_dotenv()
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+MODEL_NAME = "llama-3.3-70b-versatile"
 
 import pandas as pd
 import numpy as np
@@ -18,7 +20,7 @@ from sklearn.preprocessing import LabelEncoder
 # ── CONFIG ────────────────────────────────────────────────
 DATA_PATH   = "data/data.csv"
 REPORTS_DIR = "reports"
-MODEL_NAME  = "llama3.1:8b"
+MODEL_NAME = "llama-3.3-70b-versatile"
 TIMESTAMP   = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 mlflow.set_experiment("ecommerce_pipeline")
@@ -138,11 +140,11 @@ Provide a structured executive report with:
 4. Model Performance Assessment
 5. Top 3 Actionable Recommendations
 """
-    response = client.chat(
-        model=MODEL_NAME,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.message.content
+    response = client.chat.completions.create(
+    model=MODEL_NAME,
+    messages=[{"role": "user", "content": prompt}]
+)
+    return response.choices[0].message.content
 
 # ── STEP 5: SAVE REPORT ───────────────────────────────────
 def save_report(stats, accuracy, llm_report):
