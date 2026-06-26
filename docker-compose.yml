@@ -1,30 +1,61 @@
-version: "3.9"
+version: "3.8"
 
 services:
-  pipeline:
-    build: .
-    container_name: data_pipeline_job
+  postgres:
+    image: postgres:15
     environment:
-      - OLLAMA_HOST=http://192.168.254.9:11434
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
     volumes:
-      - ./data:/app/data
-      - ./reports:/app/reports
-      - ./mlruns:/app/mlruns
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  dashboard:
-    build: .
-    container_name: data_pipeline_dashboard
-    command: ["python", "dashboard.py"]
+      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "8050:8050"
-    environment:
-      - OLLAMA_HOST=http://192.168.254.9:11434
-    volumes:
-      - ./data:/app/data
-      - ./reports:/app/reports
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "5432:5432"
+
+  airflow-init:
+    image: apache/airflow:2.9.0
     depends_on:
-      - pipeline
+      - postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg="
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    command: >
+      bash -c "airflow db migrate && airflow users create
+      --username admin --password admin123
+      --firstname Admin --lastname User
+      --role Admin --email admin@pipeline.com"
+
+  airflow-webserver:
+    image: apache/airflow:2.9.0
+    depends_on:
+      - postgres
+      - airflow-init
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg="
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./dags:/opt/airflow/dags
+    ports:
+      - "8080:8080"
+    command: airflow webserver
+
+  airflow-scheduler:
+    image: apache/airflow:2.9.0
+    depends_on:
+      - postgres
+      - airflow-init
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg="
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./dags:/opt/airflow/dags
+    command: airflow scheduler
+
+volumes:
+  postgres_data:

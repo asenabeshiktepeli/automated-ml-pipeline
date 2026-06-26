@@ -133,3 +133,53 @@ POST http://localhost:8000/predict
 
 → {"prediction": 0, "probability": 0.94, "label": "Not returned"}
 ```
+
+## Recent Updates
+
+### Live API Integration
+
+- Added `data_fetcher.py` — pulls real-time data from Fake Store API
+- Automatic data refresh: products + carts → cleaned sales dataset
+- Data stored in both CSV and SQLite database
+
+### Database Layer
+
+- Added SQLite database (`data/pipeline.db`)
+- Tables: `sales_data`, `pipeline_runs`
+- Ready for PostgreSQL migration via Docker
+
+### Airflow Orchestration
+
+- Full Docker Compose setup with Airflow 2.9.0
+- DAG: `sales_data_pipeline` — runs daily at 02:00 AM
+- Services: PostgreSQL + Airflow Webserver + Scheduler
+
+### Alert Monitor
+
+- Threshold-based alerting (accuracy, return rate)
+- Log file: `logs/alerts.log`
+- Email alert support (Gmail App Password required)
+
+## Running the Full Stack
+
+```bash
+# 1. Fetch live data
+python data_fetcher.py
+
+# 2. Run pipeline
+python main_pipeline.py
+
+# 3. Start Airflow
+docker-compose up -d
+
+# 4. Monitor alerts
+python alert_monitor.py
+
+# 5. Start dashboard
+python dashboard.py
+# → http://localhost:8050
+
+# 6. Check MLflow
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+# → http://localhost:5000
+```

@@ -1,88 +1,146 @@
+import smtplib
+import sqlite3
 import pandas as pd
-import logging
+import json
 import os
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
 # ── CONFIG ────────────────────────────────────────────────
-DATA_PATH         = "data/sales_data.csv"
-LOG_DIR           = "logs"
-RETURN_THRESHOLD  = 0.15   # Alert if return rate exceeds 15%
-REVENUE_MIN       = 10000  # Alert if total revenue drops below $10,000
+# Fill in your Gmail address and App Password
+EMAIL_SENDER   = "your_email@gmail.com"
+EMAIL_PASSWORD = "your_app_password"
+EMAIL_RECEIVER = "your_email@gmail.com"
 
-os.makedirs(LOG_DIR, exist_ok=True)
+# Alert thresholds
+ACCURACY_THRESHOLD    = 0.85   # Alert if accuracy drops below 85%
+RETURN_RATE_THRESHOLD = 25.0   # Alert if return rate exceeds 25%
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.FileHandler(f"{LOG_DIR}/alerts.log"),
-        logging.StreamHandler()
-    ]
-)
+DB_PATH = "data/pipeline.db"
 
-# ── LOAD DATA ─────────────────────────────────────────────
-def load_data():
-    df = pd.read_csv(DATA_PATH)
-    df["revenue"] = df["quantity"] * df["price"]
-    return df
+# ── LOAD METRICS ──────────────────────────────────────────
+def load_metrics():
+    print("Loading metrics from database...")
+    conn   = sqlite3.connect(DB_PATH)
+    df     = pd.read_sql("SELECT * FROM sales_data", conn)
+    conn.close()
+
+    metrics = {
+        "total_revenue"  : round(df["revenue"].sum(), 2),
+        "total_orders"   : len(df),
+        "return_rate"    : round(df["returned"].mean() * 100, 2),
+        "avg_order_value": round(df["revenue"].mean(), 2),
+        "timestamp"      : datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+    return metrics
 
 # ── CHECK ALERTS ──────────────────────────────────────────
-def check_alerts(df):
-    alerts_triggered = []
+def check_alerts(metrics, model_accuracy=1.0):
+    alerts = []
 
-    return_rate   = df["returned"].mean()
-    total_revenue = df["revenue"].sum()
+    if model_accuracy < ACCURACY_THRESHOLD:
+        alerts.append({
+            "type"    : "MODEL_DEGRADATION",
+            "severity": "HIGH",
+            "message" : f"Model accuracy dropped to {model_accuracy:.4f} (threshold: {ACCURACY_THRESHOLD})",
+        })
 
-    # Alert 1 — High return rate
-    if return_rate > RETURN_THRESHOLD:
-        msg = (f"ALERT — High return rate detected: "
-               f"{return_rate:.1%} (threshold: {RETURN_THRESHOLD:.1%})")
-        logging.warning(msg)
-        alerts_triggered.append(msg)
-    else:
-        logging.info(f"Return rate OK: {return_rate:.1%}")
+    if metrics["return_rate"] > RETURN_RATE_THRESHOLD:
+        alerts.append({
+            "type"    : "HIGH_RETURN_RATE",
+            "severity": "MEDIUM",
+            "message" : f"Return rate is {metrics['return_rate']}% (threshold: {RETURN_RATE_THRESHOLD}%)",
+        })
 
-    # Alert 2 — Low revenue
-    if total_revenue < REVENUE_MIN:
-        msg = (f"ALERT — Revenue below threshold: "
-               f"${total_revenue:,.0f} (min: ${REVENUE_MIN:,})")
-        logging.warning(msg)
-        alerts_triggered.append(msg)
-    else:
-        logging.info(f"Revenue OK: ${total_revenue:,.0f}")
+    return alerts
 
-    # Alert 3 — Region performance drop
-    region_revenue = df.groupby("region")["revenue"].sum()
-    weak_regions   = region_revenue[region_revenue < 4000].index.tolist()
-    if weak_regions:
-        msg = f"ALERT — Underperforming regions: {weak_regions}"
-        logging.warning(msg)
-        alerts_triggered.append(msg)
-    else:
-        logging.info("All regions performing above threshold.")
+# ── SEND EMAIL ────────────────────────────────────────────
+def send_alert_email(alerts, metrics):
+    if not alerts:
+        print("No alerts to send.")
+        return
 
-    return alerts_triggered
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = f"[PIPELINE ALERT] {len(alerts)} issue(s) detected"
+    msg["From"]    = EMAIL_SENDER
+    msg["To"]      = EMAIL_RECEIVER
 
-# ── SUMMARY ───────────────────────────────────────────────
-def print_summary(df, alerts):
-    print("\n" + "="*60)
-    print("ALERT MONITOR — SUMMARY")
-    print("="*60)
-    print(f"Timestamp   : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Total orders: {len(df)}")
-    print(f"Return rate : {df['returned'].mean():.1%}")
-    print(f"Revenue     : ${df['revenue'].sum():,.0f}")
-    print("-"*60)
-    if alerts:
-        print(f"ALERTS TRIGGERED: {len(alerts)}")
-        for a in alerts:
-            print(f"  ⚠  {a}")
-    else:
-        print("ALL SYSTEMS NORMAL — No alerts.")
-    print("="*60 + "\n")
+    body = f"""
+AUTOMATED PIPELINE ALERT
+Generated: {metrics['timestamp']}
+{'='*50}
+
+ALERTS DETECTED: {len(alerts)}
+
+"""
+    for i, alert in enumerate(alerts, 1):
+        body += f"""
+Alert {i}: {alert['type']}
+Severity : {alert['severity']}
+Message  : {alert['message']}
+{'-'*40}
+"""
+
+    body += f"""
+CURRENT METRICS:
+- Total Revenue  : ${metrics['total_revenue']:,}
+- Total Orders   : {metrics['total_orders']}
+- Return Rate    : {metrics['return_rate']}%
+- Avg Order Value: ${metrics['avg_order_value']}
+
+{'='*50}
+Automated Data Pipeline Monitor
+"""
+
+    msg.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
+        print(f"Alert email sent to {EMAIL_RECEIVER}")
+    except Exception as e:
+        print(f"Email failed: {e}")
+        print("(Configure EMAIL_SENDER and EMAIL_PASSWORD to enable email alerts)")
+
+# ── LOG ALERT ─────────────────────────────────────────────
+def log_alerts(alerts, metrics):
+    os.makedirs("logs", exist_ok=True)
+    log_path = "logs/alerts.log"
+
+    with open(log_path, "a", encoding="utf-8") as f:
+        f.write(f"\n{'='*60}\n")
+        f.write(f"Alert Check: {metrics['timestamp']}\n")
+        f.write(f"Return Rate: {metrics['return_rate']}%\n")
+
+        if alerts:
+            for alert in alerts:
+                f.write(f"[{alert['severity']}] {alert['type']}: {alert['message']}\n")
+        else:
+            f.write("Status: OK — No alerts\n")
+
+    print(f"Alert log saved: {log_path}")
 
 # ── MAIN ──────────────────────────────────────────────────
 if __name__ == "__main__":
-    df     = load_data()
-    alerts = check_alerts(df)
-    print_summary(df, alerts)
+    print("\n" + "="*60)
+    print("ALERT MONITOR — STARTING")
+    print("="*60 + "\n")
+
+    metrics  = load_metrics()
+    alerts   = check_alerts(metrics)
+
+    print(f"Return Rate  : {metrics['return_rate']}%")
+    print(f"Total Revenue: ${metrics['total_revenue']:,}")
+    print(f"Alerts found : {len(alerts)}")
+
+    if alerts:
+        print("\nALERTS:")
+        for alert in alerts:
+            print(f"  [{alert['severity']}] {alert['type']}: {alert['message']}")
+
+    log_alerts(alerts, metrics)
+    send_alert_email(alerts, metrics)
+
+    print("\nMonitor complete.")
