@@ -9,3 +9,4 @@ schedule
 groq
 python-dotenv
 pytest
+duckdb
