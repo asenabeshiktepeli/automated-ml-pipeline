@@ -6,3 +6,119 @@
 Alert Check: 2026-06-26 12:26:28
 Return Rate: 20.0%
 Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 13:42:34
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 13:54:07
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 13:54:29
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 13:55:58
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 14:14:05
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 14:45:38
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-27 15:12:49
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-30 08:46:42
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-30 08:47:12
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-30 09:05:38
+Return Rate: 14.29%
+Status: OK — No alerts
+
+============================================================
+Alert Check: 2026-06-30 10:06:00
+Return Rate: 14.29%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.6667 (threshold: 0.85)
+
+============================================================
+Alert Check: 2026-06-30 10:53:43
+Return Rate: 14.29%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.6667 (threshold: 0.85)
+
+============================================================
+Alert Check: 2026-06-30 12:05:03
+Return Rate: 14.29%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.6667 (threshold: 0.85)
+
+[Investigator Agent Diagnosis]
+Modelin performansı zamanla düşüşe geçmiş gibi görünüyor ve son iki denemede özellikle düşük doğruluk değerleri görülmektedir.
+
+Bu durumun muhtemelen modeli eğitme sırasında veya veri setinin kalitesinde bazı hataların varlığına işaret edebilmektedir.
+
+============================================================
+Alert Check: 2026-06-30 12:21:29
+Return Rate: 14.29%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.6667 (threshold: 0.85)
+
+[Investigator Agent Diagnosis]
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+============================================================
+Alert Check: 2026-06-30 13:25:40
+Return Rate: 14.29%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.6667 (threshold: 0.85)
+
+[Investigator Agent Diagnosis]
+Modelin performansı zamanla düşmektedir ve son 3 denemede %66'lık doğruluk oranları görülmektedir.
+
+Bu durumun olası nedenleri arasında modeli eğitiren verinin kalitesizliği, hiperparametrelerin uygun ayarlanmaması veya veri setindeki dengesizlik gibi faktörler yer alabilir.
+
+============================================================
+Alert Check: 2026-07-01 10:06:50
+Return Rate: 42.86%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.7644 (threshold: 0.85)
+[MEDIUM] HIGH_RETURN_RATE: Return rate is 42.86% (threshold: 25.0%)
+
+[Investigator Agent Diagnosis]
+Modelin performansı düşüşe geçiyor gibi görünüyor ve yüksek geri dönüş oranları var.
+
+Bu durumun muhtemel sebebi modeli eğitirken kullanılan verilerin kalitesiz olması veya eğitim sürecinde hataların oluşması olabilir.
+Eğitim verileri arasında anlamsız veriler ya da veri kümeleri arasındaki farklılıkları göz ardı ediyorsunuz. Bu, modele tutarlı bir şekilde öğrenme imkanı tanımıyor ve modelin performansı düşüyor.
+
+Bu sorun tekrar eden bir problem gibi görünmuyor ancak daha fazla verinin incelenmesi için ek analizler yapmak faydalı olabilir.
+Modeli yeniden eğitmek veya farklı eğitim stratejileri denemek de çözüm olabilecek yöntemlerden biri.
+
+============================================================
+Alert Check: 2026-07-01 10:11:09
+Return Rate: 42.86%
+[HIGH] MODEL_DEGRADATION: Model accuracy dropped to 0.7644 (threshold: 0.85)
+[MEDIUM] HIGH_RETURN_RATE: Return rate is 42.86% (threshold: 25.0%)
+
+[Investigator Agent Diagnosis]
+Modelin performansı düşüşe geçti ve yüksek geri dönüş oranı görüldü.
+
+Bu durumun muhtemelen modeli aşırı egitim veya overfitting'e neden olduğu düşünülebilir, çünkü son accuracy değerleri tutarlı değildir (1 ile 0 arasında değişmektedir). Bu da modellerinin daha iyi bir şekilde eğitilememesi ve gerçek dünya verilerine uyumsuz olması anlamına gelir.
+
+Bu durumun tekrar eden sorun olabileceğini düşündürüyor.

@@ -1,0 +1,2100 @@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-060a43b4229948d68798b9492a558b0c\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-153e6b6382ad4d47bd5f967c2e0bda7b\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-17d073e6aaf74695b00c64354506e6d0\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-2148279e5d314dc4bc443965cb941e75\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-27cf95d6fc4e47e39ab0d27d44fbb5a4\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-3957cee64f8f45d0b20ca85905845f9a\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-3a561a7552344ff9bc8b3b91ed0126ce\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-5284a6641286487b8e1cc01fb9c96dea\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-5721f1f6baae494bb7d29b8f1e652814\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-582f32af8a95491bb1abb91b7562cabe\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-6550c5f7d01c4e719c1c0723083491f1\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-6ce0955f9731400ca07b77f6e0219141\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-6dd800bd68c745f098db3e977903aa01\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-725a86d6ef3943b6946ec201688bf1fc\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-7bdf9d7168f44cc1924f2a10ba177ff3\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-83090be65255494a94ecc400cb838b6c\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-8dd455d5c37042c1bb5a8eb06cdd2de4\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-9119a517a85143db94648f14d5e40752\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-979d9285e6e442d19cd20b3c7ac59c11\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-992fc32705b94a5cbf5cadd7b613703c\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-a48f90e78b6e48358167641d002610c3\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-ad0de5514afa44e1b41bb8feb2362e5b\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-b06edb1d94c14f2bad0192c7c9302ed7\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-c02e027ee1cd4dd3b85849b4bd018e32\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-c4b1535b547b4263ab61d026b62439f2\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-c5b901ffe1054926b2de61eb5b98b058\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-cad834c091a44f0a97fe4d00c2d1510a\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-ceb4b6b898d844df82707795072371ee\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-d00b0395d852477f98b63dda13c84a48\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-d838136ff98a4072aabc0f0309f48e6b\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-df15921c052f4ad581ba788d24cc3000\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-e1ded1a82c1d4500abce7c5a3d982d3b\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-f14f76a0b03844a1916d7da9d0cb91bb\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-f205c11919844a0282ecfbc5b3f25ea2\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\C?\Users\User\Desktop\data_pipeline\mlruns\1\models\m-ff5192e9bac4404b865842f234b901ee\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==1.26.4
+pandas==2.1.4
+psutil==5.9.8
+rich==13.7.1
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\dags\pipeline_dag.py =====
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
+from datetime import datetime, timedelta
+import subprocess
+import logging
+
+default_args = {
+    "owner"      : "data_pipeline",
+    "retries"    : 1,
+    "retry_delay": timedelta(minutes=5),
+    "start_date" : datetime(2026, 1, 1),
+}
+
+PROJECT_DIR = "/opt/airflow/dags/project"
+
+def run_script(script_name):
+    logging.info(f"Running {script_name}...")
+    result = subprocess.run(
+        ["python", f"{PROJECT_DIR}/{script_name}"],
+        capture_output=True, text=True,
+        cwd=PROJECT_DIR
+    )
+    logging.info(result.stdout)
+    if result.returncode != 0:
+        raise Exception(f"{script_name} failed: {result.stderr}")
+
+def run_pipeline():
+    run_script("main_pipeline.py")
+
+def run_drift_check():
+    run_script("drift_monitor.py")
+
+def run_auto_retrain():
+    run_script("auto_retrain.py")
+
+def run_alert_check():
+    run_script("alert_monitor.py")
+
+with DAG(
+    dag_id="sales_data_pipeline",
+    default_args=default_args,
+    description="Automated sales pipeline with drift monitoring and auto-retrain",
+    schedule="0 2 * * *",
+    catchup=False,
+    tags=["sales", "ml", "llm", "drift", "retrain"],
+) as dag:
+
+    start = BashOperator(
+        task_id="start_notification",
+        bash_command='echo "Pipeline starting at $(date)"'
+    )
+
+    run = PythonOperator(
+        task_id="run_pipeline",
+        python_callable=run_pipeline,
+    )
+
+    drift_check = PythonOperator(
+        task_id="check_drift",
+        python_callable=run_drift_check,
+    )
+
+    auto_retrain = PythonOperator(
+        task_id="auto_retrain_if_needed",
+        python_callable=run_auto_retrain,
+    )
+
+    alert_check = PythonOperator(
+        task_id="check_alerts",
+        python_callable=run_alert_check,
+    )
+
+    end = BashOperator(
+        task_id="end_notification",
+        bash_command='echo "Pipeline completed at $(date)"'
+    )
+
+    start >> run >> drift_check >> auto_retrain >> alert_check >> end
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\1\models\m-38ab6b4dd73545f6bf45133783fc04a9\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\1\models\m-8943c04732b7471586b8f1f55a250cbb\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\1\models\m-ec53dcd210f34375802485acc5de3bb7\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-21be6b6067be45d6ba587f921fc185f1\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-2c7c1c0fc296403a9159c1c3814aa711\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-4118d4bcd661461f857ae714b7b90eea\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-50e3560808134765833d1a166219bcf8\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-8a5b4654524a4afab20d809a72f7fb33\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-9e748d98fe1e4d0499e2604ac36ed2d0\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-b52ee00b5b474ab2bb501db21baf01c8\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-c73b0a1ac68542fcbc661eb84114c2aa\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.4.6
+pandas==2.3.3
+scikit-learn==1.9.0
+scipy==1.17.1
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-d7f049e62ed74bf2a36f5fe88af67d3b\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\2\models\m-e25dc5a700864882b3ba011ef05076e2\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\mlruns\3\models\m-12bf6eecc66a4df4a7a79f8f905750b6\artifacts\requirements.txt =====
+
+mlflow==3.14.0
+numpy==2.5.0
+pandas==2.3.3
+psutil==7.2.2
+rich==15.0.0
+scikit-learn==1.9.0
+scipy==1.18.0
+skops==0.14.0
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_140456.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:06:13
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our sales pipeline report indicates a strong revenue performance with $21,450 in total revenue and an average order value of $1072.5. However, there are some concerns regarding the return rate and customer behavior that need to be addressed. Our predictive model shows high accuracy in identifying potential returns.
+
+**Key Business Insights:**
+
+• **Strong Revenue Growth**: The average order value is significantly higher than our industry benchmark, indicating a successful product mix strategy.
+• **Regional Strengths**: North Region leads with 20.0% of total orders, highlighting opportunities to expand sales efforts in this area.
+• **Customer Demographics**: Our customers are relatively young (average age: 37.2), which may suggest that we're targeting the right demographic.
+
+**Risk Analysis:**
+Our return rate is concerning at 20.0%, which can have a significant impact on our bottom line and customer satisfaction. This high return rate could be due to various factors such as product quality, pricing strategy, or shipping issues. We need to investigate these causes and implement corrective actions to improve product acceptance.
+
+**Model Performance Assessment:**
+Our return prediction model shows excellent performance with 100% accuracy in the classification report, indicating that our features are effectively capturing relevant information to predict returns. However, the feature importance analysis reveals that customer age (0.277) is a significant factor, suggesting that we need to explore how age influences product choice and return behavior.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Conduct a thorough analysis of return reasons**: Identify the root causes behind our high return rate and implement corrective actions such as revising product quality, adjusting pricing strategy, or optimizing shipping processes.
+2. **Develop targeted marketing campaigns for North Region**: Leverage our regional strengths to execute focused sales efforts in North Region, driving further revenue growth.
+3. **Segment customer data by age**: Use the insight from our model that customer age is a significant factor influencing return behavior to segment customers and develop targeted promotions or loyalty programs to retain young customers.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_141011.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:11:29
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report: Sales Pipeline Analysis**
+
+**Executive Summary**
+Our sales pipeline report indicates a strong revenue performance, with $21,450 in total revenue and an average order value of $1,072.50. However, we need to address the high return rate of 20.0%, which could impact customer satisfaction and long-term growth.
+
+**Key Business Insights**
+
+• **Top-performing categories**: The top category is Electronics, with a significant share of our total revenue. This suggests that our product offerings in this category are resonating well with customers.
+• **Regional strengths**: Our North region leads in terms of sales, indicating potential opportunities for expansion and targeting efforts in this area.
+• **Average customer age**: With an average customer age of 37.2 years, we may be attracting a mature demographic. This could inform our marketing strategies to target specific age groups.
+
+**Risk Analysis**
+The high return rate of 20.0% is a concern that needs immediate attention. If not addressed, it could lead to:
+
+* Negative word-of-mouth and damage to brand reputation
+* Increased costs associated with processing returns and refunds
+* Decreased customer loyalty and retention
+
+We need to investigate the root causes of this issue and implement strategies to improve product quality, reduce defects, or enhance customer support.
+
+**Model Performance Assessment**
+The Return Prediction Model achieves an accuracy of 1.0000, indicating a perfect fit for the data used in training. However, it's essential to evaluate its performance on unseen data and consider any potential overfitting issues.
+
+**Top 3 Actionable Recommendations**
+
+1. **Improve product quality and reduce defects**: Collaborate with suppliers and manufacturers to enhance product design, materials, or manufacturing processes to minimize returns.
+2. **Enhance customer support and return policies**: Review our current return policy and customer support procedures to ensure they are clear, efficient, and customer-centric.
+3. **Targeted marketing efforts for high-risk customers**: Use data analytics and segmentation techniques to identify high-risk customers (those who have returned products in the past) and develop targeted marketing campaigns to encourage retention and loyalty.
+
+By addressing these key areas, we can mitigate the risks associated with the high return rate, improve customer satisfaction, and drive long-term growth.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_142314.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:23:36
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_143106.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:33:03
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**1. Executive Summary**
+
+Our sales pipeline report indicates a strong performance with a total revenue of $21,450 and an average order value of $1072.5. However, the return rate of 20% is a concern that warrants attention. Despite this, our return prediction model has achieved perfect accuracy.
+
+**2. Key Business Insights**
+
+* The top-selling category is Electronics, indicating a strong demand for technology products.
+* The Phone is the most popular product, suggesting a robust sales performance in this specific segment.
+* The average customer age of 37.2 years indicates that our target audience is mature adults with established purchasing power.
+
+**3. Risk Analysis**
+
+Our return rate of 20% is higher than desirable, indicating potential issues with product quality or customer satisfaction. If left unaddressed, this could lead to a decline in customer trust and loyalty, ultimately impacting revenue growth.
+
+**4. Model Performance Assessment**
+
+The return prediction model has achieved perfect accuracy (1.0000), suggesting that the features used are highly relevant and effective in predicting returns. However, it is essential to note that the dataset may be too small or biased, which could impact generalizability to larger populations.
+
+**5. Top 3 Actionable Recommendations**
+
+1. **Conduct a root cause analysis**: Investigate the reasons behind the high return rate (20%) and identify potential areas for improvement in product quality, customer service, or marketing strategies.
+2. **Improve product offerings**: Review product assortment and consider adding more diverse or complementary products to cater to customers' evolving needs and preferences.
+3. **Enhance customer engagement**: Develop targeted campaigns to increase customer satisfaction, retention, and loyalty by leveraging data-driven insights on customer behavior, demographics, and purchase history.
+
+By addressing these areas of concern, we can optimize our sales performance, reduce returns, and drive revenue growth while maintaining a strong reputation in the market.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_143413.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:35:44
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_144114.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:41:40
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_144948.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:51:40
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+The sales pipeline report indicates a strong revenue performance, with $21,450 in total revenue and an average order value of $1072.5. However, the return rate is concerning at 20.0%, which may indicate potential issues with product quality or customer satisfaction. The top-performing categories, products, and regions provide valuable insights for targeted marketing strategies.
+
+**Key Business Insights:**
+
+* **Revenue Growth:** The total revenue has increased, indicating a positive trend in sales.
+* **Category Dominance:** Electronics is the top-performing category, accounting for a significant portion of sales. This suggests that our product offerings are resonating well with customers in this segment.
+* **Geographic Focus:** North region is leading in terms of sales, which may indicate a strong market presence and customer base in this area.
+
+**Risk Analysis: Return Rate Concerns**
+The return rate of 20.0% is significantly higher than the industry average, which can negatively impact our bottom line and customer satisfaction. This may be due to several factors such as:
+
+* Poor product quality
+* Inadequate customer support
+* Misaligned product offerings with customer needs
+
+It is essential to investigate the root cause of this issue and implement corrective measures to reduce returns and improve overall customer experience.
+
+**Model Performance Assessment**
+The return prediction model demonstrates high accuracy, with an accuracy score of 1.0000. The feature importance analysis indicates that customer age (0.277) and product-related features (product_enc: 0.123, price: 0.139) are the most significant contributors to return predictions.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Investigate Return Rate Causes:** Conduct a thorough analysis of returns to identify the root cause and implement corrective measures to reduce returns and improve customer satisfaction.
+2. **Segmented Marketing Strategy:** Develop targeted marketing campaigns for top-performing categories (Electronics) and regions (North), focusing on product offerings that resonate well with these segments.
+3. **Customer Age-Based Segmentation:** Analyze customer age-based segmentation to identify patterns in return rates, preferences, and purchase behaviors. This can help us tailor our product offerings, pricing, and marketing strategies to better meet the needs of different age groups.
+
+By addressing these key areas, we can improve revenue growth, reduce returns, and enhance overall customer satisfaction.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_145225.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 14:53:48
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report: Sales Pipeline Analysis**
+
+**Executive Summary**
+Our sales pipeline analysis reveals a robust revenue performance, with $21,450 in total revenue and an average order value of $1072.5. Notably, the return rate stands at 20%, which warrants close attention to prevent potential losses. Our predictive model demonstrates exceptional accuracy in identifying returns.
+
+**Key Business Insights**
+
+* **Electronics dominate sales**: The top category is Electronics, accounting for a significant share of our revenue.
+* **Phone sales are strong**: The Phone product leads the pack, indicating its popularity among customers.
+* **North Region drives growth**: Our North region performs exceptionally well, underscoring its importance in our sales strategy.
+
+**Risk Analysis**
+The 20% return rate is concerning and may indicate underlying issues with product quality, customer satisfaction, or logistics. This trend could be a red flag for potential losses and necessitates prompt investigation to identify the root cause.
+
+**Model Performance Assessment**
+Our Return Prediction Model boasts an impressive accuracy of 1.0000, suggesting that it can accurately predict returns in new scenarios. Feature importance analysis reveals that customer age is the most critical factor influencing return rates (27.7%), followed closely by product and region encoding features.
+
+**Top 3 Actionable Recommendations**
+
+1. **Investigate Return Rate Causes**: Conduct an in-depth analysis of our return rate to pinpoint its causes, focusing on potential issues with product quality, customer satisfaction, or logistics.
+2. **Optimize Product Offering**: Given the Phone's popularity, consider optimizing our product offerings and promotions for this category to maximize sales revenue.
+3. **Region-Specific Strategies**: Develop targeted marketing strategies tailored to the North Region's strengths, leveraging its dominance in sales to drive further growth.
+
+By addressing these insights and recommendations, we can refine our sales strategy, mitigate potential losses, and optimize our revenue performance.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_151233.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 15:14:14
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our sales pipeline report reveals a strong performance in revenue, with $21,450 generated across 20 orders. However, a concerning return rate of 20% indicates potential issues with product quality or customer satisfaction. Our Return Prediction Model has achieved perfect accuracy, but further analysis is required to understand the underlying factors contributing to returns.
+
+**Key Business Insights:**
+
+* The Top Category and Product are Electronics and Phone, respectively, indicating a strong demand for these products.
+* The Top Region is North, suggesting regional market opportunities and potential for targeted marketing efforts.
+* The Average Customer Age of 37.2 years implies that our customer base skews towards an older demographic, which may have implications for product development and marketing strategies.
+
+**Risk Analysis:**
+The high Return Rate (20%) is a significant concern, as it can lead to financial losses and negatively impact customer satisfaction. This may be due to various factors such as:
+
+* Product defects or quality issues
+* Inadequate product information or descriptions
+* Insufficient customer support or after-sales service
+
+**Model Performance Assessment:**
+The Return Prediction Model has achieved perfect accuracy (1.0000) in the classification report, indicating that it can accurately predict returns based on various features such as product encoding, category encoding, and customer age. However, the feature importance indicates that customer age is the most significant factor contributing to returns, which warrants further investigation.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Conduct a thorough review of product quality and manufacturing processes**: Identify potential issues leading to returns and implement corrective measures to improve product reliability.
+2. **Enhance product information and descriptions**: Ensure that customers have accurate and detailed information about products, reducing the likelihood of incorrect purchases or dissatisfaction.
+3. **Develop targeted marketing campaigns for regional markets**: Focus on the North region, leveraging its high demand for Electronics and Phone products to drive sales growth and customer engagement.
+
+These recommendations address the key concerns identified in this report, aiming to mitigate returns, improve customer satisfaction, and enhance overall business performance.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_152144.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 15:23:26
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**1. Executive Summary:**
+Our sales pipeline report indicates a strong overall performance, with a total revenue of $21,450 and an average order value of $1072.5. However, our return rate is a concerning 20.0%, which may indicate potential issues in product quality or customer satisfaction.
+
+**2. Key Business Insights:**
+
+* **Top-selling products:** Electronics, particularly phones, are driving sales, with the top region being North.
+* **Customer demographics:** Our average customer age is 37.2 years old, suggesting a mature market with established customers.
+* **Sales concentration:** The Top Category and Product are concentrated in a single region (North), indicating potential opportunities for expansion into other regions.
+
+**3. Risk Analysis:**
+Our return rate of 20.0% is significantly higher than ideal, which may indicate:
+* Poor product quality or design
+* Inadequate customer support or communication
+* Misaligned product offerings with customer needs
+
+This high return rate can have significant financial implications and damage our brand reputation.
+
+**4. Model Performance Assessment:**
+The Return Prediction Model shows an accuracy of 1.0000, which is ideal for a classification problem. However, the feature importance suggests that customer age is the most influential factor (27.7%), followed by product encodings (12.3%) and region encodings (17.2%). This implies that our model is heavily reliant on demographic data.
+
+**5. Top 3 Actionable Recommendations:**
+
+1. **Conduct root cause analysis:** Investigate the high return rate to identify the underlying causes, which may involve reviewing product quality, customer support processes, or marketing strategies.
+2. **Diversify sales regions and categories:** Expand our offerings into other regions (South, East) and categories to reduce dependence on a single market segment and increase overall revenue potential.
+3. **Refine Return Prediction Model:** Incorporate additional features, such as customer behavior or purchase history data, to improve the model's accuracy and robustness in predicting returns.
+
+By addressing these areas of concern, we can optimize our sales pipeline, reduce return rates, and drive sustainable growth for the business.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_153613.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 15:38:05
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8911407.9
+avg_order_value          : 22.4
+total_orders             : 397884
+return_rate              : 0.0
+top_country              : United Kingdom
+top_product              : PAPER CRAFT , LITTLE BIRDIE
+unique_customers         : 4338
+avg_quantity             : 13.0
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**1. Executive Summary:**
+Our e-commerce pipeline report reveals strong performance across key business metrics, with exceptional accuracy in our Return Prediction Model. However, we must remain vigilant regarding the return rate, which remains at a concerning 0.0%. To build on this success and mitigate potential risks, I recommend prioritizing the following actionable recommendations.
+
+**2. Key Business Insights:**
+
+* **Record-breaking Revenue:** Our total revenue of $8,911,407.9 is an excellent indicator of a healthy business.
+* **Strong Customer Retention:** With a Return Rate of 0.0%, it appears that our customers are highly satisfied with their purchases.
+* **Geographic Focus:** The United Kingdom is emerging as a top market for us, indicating potential opportunities for expansion.
+
+**3. Risk Analysis:**
+The return rate has been consistently 0.0% across all orders, which raises concerns about customer satisfaction and potential issues that might not be captured in our reporting. A return rate of 0.0% is unusually low and may indicate:
+
+* **Overly lenient returns policy:** This could result in revenue losses and negative impacts on the bottom line.
+* **Insufficient quality control measures:** We may be missing an opportunity to identify potential issues with products or services before they become major problems.
+
+**4. Model Performance Assessment:**
+Our Return Prediction Model has achieved impressive accuracy, but its feature importance metrics reveal that no single factor is driving predictions. This suggests that the model might not be fully utilizing available data, which could indicate opportunities for improvement:
+
+* **Review of feature engineering and selection:** We should examine how we're encoding variables like country and product to ensure they're contributing meaningfully to our models.
+* **Incorporation of additional features:** Consider adding more context about the customer journey or product interactions that might enhance predictive power.
+
+**5. Top 3 Actionable Recommendations:**
+
+1.  **Immediate Review of Returns Policy:** Conduct a thorough review of our returns policy to identify any potential vulnerabilities and implement adjustments as needed.
+2.  **Enhance Quality Control Measures:** Implement more rigorous quality control measures, including enhanced product inspections and customer feedback mechanisms, to minimize the likelihood of defective products reaching customers.
+3.  **Feature Engineering and Selection Review:** Re-examine feature engineering and selection processes for our Return Prediction Model to ensure we're maximizing its potential performance and leveraging valuable insights from available data.
+
+These recommendations aim to address immediate concerns while also exploring opportunities for long-term growth and improvement in the e-commerce pipeline.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_183855.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 18:40:25
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8911407.9
+avg_order_value          : 22.4
+total_orders             : 397884
+return_rate              : 0.0
+top_country              : United Kingdom
+top_product              : PAPER CRAFT , LITTLE BIRDIE
+unique_customers         : 4338
+avg_quantity             : 13.0
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our e-commerce pipeline report indicates strong revenue growth, with a total of $8,911,407.9 in sales and an average order value of $22.4. However, a closer examination reveals some areas of concern that require attention to maintain our competitive edge.
+
+**Key Business Insights:**
+
+* **Strong Revenue Growth**: Our total revenue has increased significantly, indicating a healthy growth trajectory.
+* **High Average Order Value**: With an average order value of $22.4, we are attracting customers who are willing to spend more on our products.
+* **Dominant Market Position in the UK**: The United Kingdom accounts for a significant portion of our sales, suggesting a strong presence in this market.
+
+**Risk Analysis:**
+While the return rate is zero, which is an excellent indicator, it's essential to note that this may be a temporary trend. In reality, returns can have a significant impact on revenue and profitability. We should continue to monitor this metric closely to ensure we're not storing up potential issues for later.
+
+**Model Performance Assessment:**
+The Return Prediction Model appears to be highly accurate, with an accuracy of 1.0000 and no feature importance attributed to any variables. However, the Classification Report suggests that our model is over-performing on a specific subset of data (79577 samples), which may not generalize well to new or diverse scenarios.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Conduct a deeper analysis of the Return Rate**: Given its zero return rate, we should investigate potential issues and strategies to prevent returns in the future.
+2. **Diversify our Marketing Efforts**: To reduce dependence on a single market (the UK), we should consider expanding our marketing efforts to other regions and countries.
+3. **Re-evaluate Model Performance and Feature Selection**: Given the high accuracy of the Return Prediction Model, it's essential to re-examine its performance on diverse datasets and adjust feature selection to ensure robustness.
+
+By addressing these areas of concern, we can maintain a strong competitive edge in the market and drive continued revenue growth.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_184839.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 18:50:25
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_country              : United Kingdom
+top_product              : REGENCY CAKESTAND 3 TIER
+unique_customers         : 4371
+avg_quantity             : 12.0
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report: E-commerce Pipeline Analysis**
+
+**Executive Summary:**
+Our e-commerce pipeline analysis reveals a strong overall performance, with $8.3M in total revenue and an impressive average order value of $20.4. The return rate remains low at 2.19%, but we have identified some areas for improvement. Our predictive models demonstrate excellent accuracy in identifying returns.
+
+**Key Business Insights:**
+
+* **Revenue Growth:** With a total revenue of $8.3M, our e-commerce pipeline has demonstrated significant growth.
+* **Top Markets and Products:** The United Kingdom is our top-performing market, with the REGENCY CAKESTAND 3 TIER being our best-selling product.
+* **Customer Retention:** Our unique customers have made an average of 12 orders each, indicating strong customer loyalty.
+
+**Risk Analysis: Return Rate Concerns**
+Our return rate stands at 2.19%, which is higher than we would like to see. While it's within acceptable limits, we should monitor this metric closely and investigate potential causes for returns. The main drivers of returns are not yet clear, but our predictive model suggests that stock code and country encoding may play a role.
+
+**Model Performance Assessment**
+Our return prediction model demonstrates an impressive accuracy of 1.0000, indicating excellent performance in identifying returns. However, the feature importance indicates that quantity has the highest impact on returns (0.987), suggesting that we should focus on optimizing inventory management to minimize returns.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Optimize Inventory Management:** Given the high feature importance of quantity, we recommend reviewing our inventory levels and adjusting them to ensure we have sufficient stock for top-selling products.
+2. **Investigate Return Causes:** We suggest conducting a thorough analysis to identify the root causes of returns, focusing on the potential impact of stock code and country encoding.
+3. **Develop Personalized Customer Experiences:** With an average order value of $20.4, there is potential for further revenue growth through targeted marketing campaigns and personalized product recommendations based on customer behavior.
+
+These findings provide a solid foundation for future optimization and growth strategies. I recommend implementing the recommended actions to further improve our e-commerce pipeline performance.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_234442.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 23:47:06
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_country              : United Kingdom
+top_product              : REGENCY CAKESTAND 3 TIER
+unique_customers         : 4371
+avg_quantity             : 12.0
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our e-commerce pipeline report highlights a strong performance with significant revenue growth and high accuracy in our return prediction model. The data suggests opportunities for optimization, particularly in addressing the return rate concern. Our analysis provides actionable insights to further enhance customer satisfaction, reduce returns, and drive continued revenue growth.
+
+**Key Business Insights:**
+
+* **Revenue Growth:** With $8.3 million in total revenue, our e-commerce platform has experienced substantial growth, indicating a strong market presence.
+* **Customer Loyalty:** The average order value of $20.4 and average quantity per order of 12 suggest high customer loyalty and repeat business opportunities.
+* **Geographic Focus:** Our top country being the United Kingdom indicates significant international customer base potential for strategic expansion.
+
+**Risk Analysis:**
+Concerning the return rate of 2.19%, our model's accuracy in predicting returns is 100% (although this may be due to a small sample size), which suggests that there could be underlying issues with product quality or customer satisfaction not yet captured by our models. A closer look into the data and possible reasons behind these returns is necessary.
+
+**Model Performance Assessment:**
+The return prediction model demonstrates perfect accuracy on the given dataset, indicating strong performance in predicting returns based on provided features (stock code encoding, country encoding, quantity, price, month, and day of week). However, the feature importance indicates that the quantity has a significant impact on the model's predictions.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Review Return Rate Causes:** Conduct a thorough analysis to identify the reasons behind the high return rate (2.19%). This could involve customer surveys, product quality checks, and supply chain audits.
+2. **Optimize Product Offering:** Given the top product is REGENCY CAKESTAND 3 TIER, consider optimizing product offerings in line with current demand trends and expanding into similar niche products to increase average order value.
+3. **Enhance Customer Satisfaction:** Implement strategies to improve customer satisfaction based on the identified reasons for high return rates. This could include improving customer support services, enhancing the user experience on the website, or offering incentives for repeat purchases.
+
+This executive report provides actionable insights that aim to reduce returns and drive revenue growth while maintaining a high level of customer satisfaction.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260624_235008.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-24 23:52:36
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_country              : United Kingdom
+top_product              : REGENCY CAKESTAND 3 TIER
+unique_customers         : 4371
+avg_quantity             : 12.0
+
+Model Accuracy: 0.9197
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary**
+Our e-commerce pipeline has achieved a total revenue of $8,300,065.81, with an average order value of $20.4 and a return rate of 2.19%. The top-performing country is the United Kingdom, and the best-selling product is the REGENCY CAKESTAND 3 TIER. Our return prediction model has achieved high accuracy, but there are concerns regarding the return rate.
+
+**Key Business Insights**
+
+* **Growing Revenue**: With a total revenue of $8,300,065.81, our e-commerce pipeline continues to grow and expand its market share.
+* **Strong Average Order Value**: An average order value of $20.4 indicates that customers are purchasing higher-value items, which can lead to increased revenue.
+* **International Success**: The United Kingdom being the top-performing country demonstrates our ability to successfully penetrate international markets.
+
+**Risk Analysis: Return Rate Concerns**
+
+While our return prediction model has achieved high accuracy (0.9197), the actual return rate of 2.19% is a concern. A higher-than-average return rate can lead to increased costs, reduced customer satisfaction, and potential damage to our brand reputation. It is essential to analyze the underlying causes of this issue and implement strategies to reduce returns.
+
+**Model Performance Assessment**
+
+Our return prediction model has achieved:
+
+* High accuracy (0.9197)
+* Feature importance:
+	+ Stock code encoding: 47.6%
+	+ Country encoding: 4.1%
+	+ Price: 18.9%
+	+ Month: 16.3%
+	+ Day of week: 13%
+
+The classification report indicates that our model has high precision and recall for the "0" class (no returns) but struggles with the "1" class (returns). This suggests that our model is effective in predicting non-returns but needs improvement in predicting actual returns.
+
+**Top 3 Actionable Recommendations**
+
+1. **Return Rate Analysis**: Conduct a thorough analysis of the return rate to identify underlying causes, such as product quality issues, incorrect shipping or labeling, or customer dissatisfaction.
+2. **Product Line Review**: Review our product line and consider removing or revising items with high return rates. This may help reduce overall returns and improve customer satisfaction.
+3. **Predictive Analytics Upgrade**: Enhance the return prediction model by incorporating additional features, such as customer behavior data, order history, or demographic information. This can lead to improved accuracy in predicting actual returns.
+
+By addressing these concerns and implementing strategies to reduce returns, we can maintain a high level of customer satisfaction, minimize costs associated with returns, and continue growing our e-commerce pipeline's revenue.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260625_131413.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-25 13:16:37
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_country              : United Kingdom
+top_product              : REGENCY CAKESTAND 3 TIER
+unique_customers         : 4371
+avg_quantity             : 12.0
+
+Model Accuracy: 0.9197
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our e-commerce pipeline report highlights a strong revenue performance of $8,300,065.81, driven by an average order value of $20.40 and a high volume of orders (406,789). Notably, our return rate stands at 2.19%, which warrants closer examination. Our predictive model demonstrates a robust accuracy of 91.97% in identifying potential returns.
+
+**Key Business Insights:**
+
+* **Strong Revenue Growth**: The pipeline report indicates a significant revenue uplift, driven by a substantial number of orders and a healthy average order value.
+* **Diversification Opportunities**: With the United Kingdom being our top-performing country, we have opportunities to expand our market share in international markets.
+* **Product Proliferation**: The REGENCY CAKESTAND 3 TIER is our top-selling product, suggesting that our product offerings are resonating with customers. However, this also raises questions about the potential for over-reliance on a single product.
+
+**Risk Analysis:**
+Our return rate stands at an elevated 2.19%, which could indicate underlying issues related to customer satisfaction, quality control, or inventory management. If left unaddressed, this may lead to decreased revenue and damage our brand reputation.
+
+**Model Performance Assessment:**
+The predictive model demonstrates a commendable accuracy of 91.97% in identifying potential returns. However, we need to drill deeper into the feature importance metrics:
+* Stock code encoding is the most critical factor, indicating that product-specific factors are driving return rates.
+* Country encoding and price also play significant roles, suggesting regional and pricing-related issues may contribute to returns.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Optimize Product Offerings**: Leverage insights from our top-selling product (REGENCY CAKESTAND 3 TIER) to identify potential opportunities for cross-selling or bundling other products.
+2. **Regional Analysis and Pricing Strategy**: Investigate regional differences in return rates and adjust pricing strategies accordingly to minimize potential losses.
+3. **Return Rate Mitigation Initiatives**: Implement targeted measures to address the root causes of our elevated return rate, such as enhanced quality control processes, improved customer communication, or supply chain optimization.
+
+By addressing these key areas, we can unlock further revenue growth opportunities while minimizing risks associated with returns and maintaining a strong brand reputation.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260625_141316.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-25 14:13:54
+======================================================================
+
+BUSINESS METRICS
+----------------------------------------
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_country              : United Kingdom
+top_product              : REGENCY CAKESTAND 3 TIER
+unique_customers         : 4371
+avg_quantity             : 12.0
+
+Model Accuracy: 0.9197
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+### Executive Summary
+Our e-commerce platform has generated a total revenue of $8,300,065.81, with an average order value of $20.4 and a return rate of 2.19%. The return prediction model has achieved an accuracy of 0.9197, providing valuable insights into the factors influencing returns. With this information, we can identify key areas of improvement and optimize our business strategy to drive growth and profitability.
+
+### Key Business Insights
+* The United Kingdom is our top-performing country, indicating a strong market presence and potential for further expansion.
+* The REGENCY CAKESTAND 3 TIER is our best-selling product, suggesting a demand for premium home goods and an opportunity to increase sales through targeted marketing and product placement.
+* The average quantity per order is 12.0, indicating that customers are making bulk purchases, which can help to increase revenue and reduce shipping costs.
+
+### Risk Analysis
+The return rate of 2.19% is a concern, as it can result in significant losses and negatively impact customer satisfaction. The return prediction model highlights that stock code encoding is the most important feature in predicting returns, followed by price, month, and day of the week. This suggests that issues with product quality, inventory management, and pricing strategies may be contributing to returns. It is essential to investigate these factors further and implement corrective measures to minimize returns and improve customer experience.
+
+### Model Performance Assessment
+The return prediction model has achieved an accuracy of 0.9197, which is a satisfactory performance. However, the classification report reveals a class imbalance issue, with a high precision and recall for non-returned orders (class 0) and low precision and recall for returned orders (class 1). This suggests that the model may be biased towards predicting non-returns, which can lead to inaccurate predictions and ineffective return prevention strategies. To address this issue, we should consider techniques such as oversampling the minority class, undersampling the majority class, or using class weights to improve the model's performance on returned orders.
+
+### Top 3 Actionable Recommendations
+1. **Inventory Management Optimization**: Review and refine our inventory management processes to ensure that products are accurately stocked and readily available to customers. This can help to reduce returns caused by stock issues and improve customer satisfaction.
+2. **Targeted Marketing Campaigns**: Develop targeted marketing campaigns to promote our best-selling products, such as the REGENCY CAKESTAND 3 TIER, and increase sales in our top-performing countries, like the United Kingdom.
+3. **Return Prevention Strategies**: Implement return prevention strategies, such as offering competitive pricing, providing detailed product information, and improving product quality, to minimize returns and improve customer experience. Additionally, use the insights from the return prediction model to identify high-risk orders and proactively address potential issues before they result in returns.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260626_111640.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-26 11:19:15
+======================================================================
+
+total_revenue            : 21450
+avg_order_value          : 1072.5
+total_orders             : 20
+return_rate              : 20.0
+top_category             : Electronics
+top_product              : Phone
+top_region               : North
+avg_customer_age         : 37.2
+
+Model Accuracy: 1.0000
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Summary**
+
+Our sales pipeline analysis reveals strong revenue growth, driven by a high average order value and increasing customer base. However, we observe a concerning return rate of 20%, indicating potential issues with product quality or customer satisfaction. Our predictive model demonstrates excellent accuracy in identifying returns.
+
+**Key Business Insights**
+
+• **High Average Order Value**: With an AOV of $1072.5, our customers are consistently purchasing high-value products, contributing to our overall revenue growth.
+• **Electronics and Phone Sales Drive Growth**: The top-selling product (Phone) and category (Electronics) account for a significant share of our sales, indicating strong demand in these areas.
+• **Customer Base Expanding but with Returns Issues**: Our average customer age is 37.2 years, suggesting an established customer base. However, the high return rate indicates potential issues that need attention.
+
+**Risk Analysis**
+
+* The high return rate (20%) poses a significant risk to our revenue and profitability. Identifying and addressing the root causes of returns is essential.
+* Concentrated sales in Electronics and Phone products may lead to over-reliance on these categories, making us vulnerable to market fluctuations or changes in consumer demand.
+
+**Model Performance Assessment**
+
+Our return prediction model demonstrates exceptional accuracy (1.0000) and excellent classification performance. However, the feature importance analysis suggests that customer age is a significant predictor of returns, which may indicate underlying demographic trends or issues with product suitability for certain age groups.
+
+**Top 3 Actionable Recommendations**
+
+1. **Analyze Return Causes**: Investigate the root causes of the high return rate to identify areas for improvement in product quality, customer satisfaction, or order fulfillment processes.
+2. **Diversify Sales Channels and Categories**: Develop strategies to reduce dependence on Electronics and Phone sales, exploring opportunities in other categories and channels to mitigate risks associated with market fluctuations.
+3. **Customer Segmentation and Personalization**: Leverage the predictive model's insights to segment customers by age and behavior, enabling targeted marketing efforts and improved product recommendations to enhance customer satisfaction and loyalty.
+
+These recommendations will help address the identified risks, optimize sales performance, and drive revenue growth while minimizing returns issues.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260626_122913.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-26 12:31:19
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary**
+Our latest sales pipeline report indicates a moderate performance, with a total revenue of $4,691.27 and an average order value of $335.09. However, our return rate is higher than expected at 14.29%, which warrants further investigation. Our predictive model has shown decent accuracy but requires refinement to improve decision-making.
+
+**Key Business Insights**
+
+* **Product Performance**: Fjallraven - Foldsack No. 1 Ba is the top-selling product across all categories, indicating a strong demand for outdoor apparel.
+* **Regional Focus**: The North region has emerged as our top-performing market, suggesting potential opportunities to expand sales efforts in this area.
+* **Customer Demographics**: Our average customer age of 42.9 suggests that we are targeting an older demographic, which may impact marketing and product development strategies.
+
+**Risk Analysis**
+The high return rate (14.29%) indicates a potential risk to our revenue growth. We need to investigate the underlying causes for these returns and consider ways to reduce them. Additionally, the low precision and recall scores in the classification report suggest that our predictive model may not be accurately identifying at-risk customers or orders, which could further exacerbate this issue.
+
+**Model Performance Assessment**
+Our return prediction model has an accuracy of 0.6667, indicating a moderate ability to predict returns. However, the feature importance analysis suggests that customer age is the most significant factor in predicting returns, followed by quantity and region. This may indicate opportunities for targeted interventions, such as personalized marketing campaigns or product recommendations based on customer demographics.
+
+**Top 3 Actionable Recommendations**
+
+1. **Investigate Return Causes**: Conduct a thorough review of returned orders to identify common patterns or trends that contribute to the high return rate.
+2. **Enhance Predictive Model**: Refine our predictive model by incorporating additional features, such as product reviews, customer purchase history, and seasonality effects, to improve accuracy and precision.
+3. **Targeted Marketing Campaigns**: Develop targeted marketing campaigns focused on our top-performing region (North) and demographics (older customers), leveraging insights from the feature importance analysis to optimize product recommendations and promotions.
+
+By implementing these strategies, we can reduce returns, enhance customer satisfaction, and ultimately drive revenue growth.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_133954.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:41:30
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our sales pipeline analysis reveals a mixed bag of results, with some promising trends and areas for improvement. The average order value is satisfactory at $335.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_134153.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:42:28
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_135124.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:53:05
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary**
+Our sales pipeline analysis reveals a total revenue of $4,691.27 with an average order value of $335.09, indicating a moderate level of sales activity. However, the return rate is higher than expected at 14.29%, warranting closer examination of our customer satisfaction and product offerings. The data also suggests potential opportunities for growth in our top-performing categories and regions.
+
+**Key Business Insights**
+
+* **Category and Product Performance**: Men's clothing accounts for a significant portion of sales, with the F@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_135221.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:53:33
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_135330.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:54:03
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_135350.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:54:24
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_135410.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:54:52
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_135514.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:55:53
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_141152.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 14:13:08
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our analysis of the sales pipeline report reveals a mixed performance, with a total revenue of $4,691.27 and an@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_141326.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 14:13:58
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_144208.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 14:45:07
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary**
+Our sales pipeline report indicates that the company has generated $4,691 in revenue with an average order value of $335, resulting in a return rate of 14.29%. The top-selling category is men's clothing, driven by the Fjallraven - Foldsack No. 1 Ba product, primarily from customers in the North region.
+
+**Key Business Insights**
+
+* **Revenue Growth**: Our revenue has increased, with an average order value of $335, suggesting a potential increase in customer spending.
+* **Return Rate Concerns**: The return rate of 14.29% indicates that we may be experiencing issues with product fit or quality, requiring attention to improve customer satisfaction and retention.
+* **Regional Focus**: Our top region is North, highlighting the importance of tailored marketing strategies for specific geographic areas.
+
+**Risk Analysis**
+The high return rate (14.29%) poses a risk to our revenue.scalablytypedI'll reformat the report as requested:
+
+**Executive Report**
+
+**Executive Summary**
+Our sales pipeline report highlights that we have generated $4,691 in revenue with an average order value of $335, resulting in a 14.29% return rate.
+
+**Key Business Insights**
+
+• **Revenue
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_150944.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 15:11:45
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260627_151206.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 15:12:43
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260630_084501.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 08:46:10
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260630_084528.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 08:46:18
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260630_084630.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 08:47:04
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260630_090108.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 09:03:24
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+### **Executive Summary**
+The sales pipeline has generated $4,691 in revenue with an average order value of $335 and a total of 14 orders placed across various regions. However, the return rate is higher than expected at 14.29%, indicating potential issues with product quality or customer satisfaction.
+
+Key Business Insights:
+
+* **Top-selling products are concentrated**: The Fjallraven - Foldsack No. 1 Ba has dominated sales in mens clothing category.
+* **Regional disparities exist**: North region accounts for a significant portion of total revenue, suggesting regional marketing strategies may be effective but require further optimization.
+* **Customer demographics matter**: Average customer age is around 43 years old.
+
+### Risk Analysis
+
+The high return rate (14.29%) poses risks to the business's profitability and reputation if not addressed promptly through quality control measures or enhanced product offerings that cater better to diverse customer preferences.
+
+### Model Performance Assessment
+Our Return Prediction model has achieved an accuracy of approximately **66%**, indicating moderate success in identifying potential returns based on various features such as products, categories, regions, quantities ordered, prices paid by customers and their age. However:
+
+- The classification report shows a significant imbalance between classes (0 vs 1), with the positive class being underrepresented.
+- Feature importance analysis suggests that product encoding is most influential followed closely by customer's quantity of purchase.
+
+### Top Actionable Recommendations
+
+**Recommendation 1**: **Enhance Quality Control Measures**
+Implement more stringent quality control processes to reduce return rates, focusing on products like Fjallraven - Foldsack No. 1 Ba which have a high incidence rate in returns.
+ 
+**Recommendation 2:** Develop Targeted Marketing Strategies
+Leverage regional insights from the North region's success and tailor marketing efforts for other regions with lower sales to boost revenue.
+
+**Recommendation 3**: **Product Diversification**
+Expand product offerings beyond top-selling items like Fjallraven - Foldsack No. 1 Ba, incorporating a more diverse range of products that cater better to the average age demographic (42.9 years) and regional preferences.
+ 
+These recommendations aim at addressing key challenges identified in this analysis—high return rates, concentrated sales among certain regions/products—and positioning our business for growth by optimizing product offerings and marketing strategies based on customer demographics and buying patterns.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260630_090342.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 09:05:31
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+### Executive Summary:
+
+Our sales pipeline analysis reveals mixed results, indicating areas of strength and concern that require attention to drive growth and improve customer satisfaction. The top-selling product is a menswear item from Fjallraven, suggesting our target market leans towards men's clothing enthusiasts or possibly outdoor enthusiast communities for this specific brand popularity.
+
+### Key Business Insights:
+
+• **Revenue Growth Potential**: With an average order value of $335.09 on 14 total orders, there seems to be potential for revenue growth if we can increase the number and quality (in terms of price) of our sales.
+  
+• **Customer Satisfaction Concerns**: The return rate is high at 14.29%, indicating a possible issue with product fit or customer expectations not being met by our products.
+
+• **Geographic Focus Opportunity**: Our top region, North, indicates that we have significant market presence in this area but may need to focus on expanding into other regions for broader growth opportunities.
+
+### Risk Analysis:
+
+- The high return rate could lead to financial losses and damage brand reputation if left unaddressed.
+  
+- Over-reliance on a single product (Fjallraven - Foldsack No. 1 Ba) makes our sales pipeline vulnerable in case of supply chain disruptions or changes in consumer preferences.
+
+### Model Performance Assessment:
+
+The return prediction model shows an accuracy rate of about two-thirds, which is somewhat low but could be improved with more data and fine-tuning the algorithm to better capture relevant features such as product characteristics (e.g., material) that might influence returns. The classification report indicates a high precision for non-returns predictions at 0.67, suggesting our model can effectively identify orders likely not returning.
+
+### Top 3 Actionable Recommendations:
+
+1. **Product Diversification and Quality Control**: Focus on expanding the product line to reduce over-reliance on one item while ensuring quality control measures are in place to minimize returns.
+   
+2. **Regional Expansion Strategy Development**: Develop a strategy for entering new regions, possibly through targeted marketing campaigns or partnerships with local influencers.
+
+3. **Customer Satisfaction Improvement Initiatives**: Implement initiatives aimed at improving customer satisfaction and reducing return rates, such as offering more flexible sizing options (e.g., free exchanges) to better meet customers' needs.
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\reports\report_20260630_100137.txt =====
+
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 10:04:01
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our sales pipeline analysis reveals a mixed performance, with some promising trends and areas for improvement. Total revenue has increased to $4691.27, but the return rate remains high at 14.29%. Our machine learning model shows moderate accuracy in predicting returns.
+
+**Key Business Insights:**
+
+* **Top-performing category:** Mens clothing is driving sales, accounting for a significant portion of total orders.
+* **Product popularity:** The Fjallraven - Foldsack No. 1 Ba remains the top-selling product across all regions and categories.
+* **Regional performance:** North region accounts for nearly half (49%) of our customers.
+
+**Risk Analysis:**
+The high return rate is a concern, indicating potential issues with customer satisfaction or quality control in certain products or areas. This may lead to revenue losses if not addressed promptly.
+
+**Model Performance Assessment:**
+
+Our Return Prediction Model demonstrates moderate accuracy at 66.67%, but there's room for improvement:
+* The model relies heavily on product and region encodings (28% combined), suggesting that these factors are crucial in predicting returns.
+* However, the feature importance of customer age is relatively high (27%), indicating its significance.
+
+**Classification Report:**
+The classification report shows a 67.33% accuracy rate across three classes:
+	+ Class 0 (non-return): High precision aand recall rates
+	+ Class 1 (return): Poor performance due to limited data points
+

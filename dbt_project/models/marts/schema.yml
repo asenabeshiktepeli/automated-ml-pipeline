@@ -1,0 +1,33 @@
+﻿version: 2
+
+models:
+  - name: retail_clean
+    description: "Final feature-ready retail table with leave-one-out RFM customer features"
+    columns:
+      - name: returned
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+      - name: revenue
+        tests:
+          - not_null
+      - name: quantity_abs
+        tests:
+          - not_null
+      - name: price
+        tests:
+          - not_null
+      - name: customer_prior_orders
+        tests:
+          - not_null
+      - name: customer_avg_order_value
+        tests:
+          - not_null
+      - name: customer_return_rate
+        tests:
+          - not_null
+      - name: customer_recency_days
+        tests:
+          - not_null

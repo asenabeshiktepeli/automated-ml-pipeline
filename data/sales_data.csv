@@ -1,15 +1,15 @@
 date,product,category,quantity,price,customer_age,region,returned,revenue
-2020-03-02,Fjallraven - Foldsack No. 1 Ba,men's clothing,4,109.95,29,East,0,439.8
-2020-03-02,Mens Casual Premium Slim Fit T,men's clothing,1,22.3,57,North,0,22.3
-2020-03-02,Mens Cotton Jacket,men's clothing,6,55.99,56,South,0,335.94
-2020-01-02,Mens Casual Premium Slim Fit T,men's clothing,4,22.3,65,South,0,89.2
-2020-01-02,Fjallraven - Foldsack No. 1 Ba,men's clothing,10,109.95,20,West,1,1099.5
-2020-01-02,John Hardy Women's Legends Nag,jewelery,2,695.0,23,North,0,1390.0
-2020-03-01,Fjallraven - Foldsack No. 1 Ba,men's clothing,2,109.95,28,South,0,219.9
-2020-03-01,WD 2TB Elements Portable Exter,electronics,1,64.0,33,East,0,64.0
-2020-01-01,Fjallraven - Foldsack No. 1 Ba,men's clothing,4,109.95,32,South,0,439.8
-2020-03-01,White Gold Plated Princess,jewelery,1,9.99,60,East,1,9.99
-2020-03-01,Pierced Owl Rose Gold Plated S,jewelery,1,10.99,52,West,0,10.99
-2020-03-01,SanDisk SSD PLUS 1TB Internal ,electronics,2,109.0,35,South,0,218.0
-2020-03-01,WD 4TB Gaming Drive Works with,electronics,3,114.0,49,East,0,342.0
-2020-03-01,MBJ Women's Solid Short Sleeve,women's clothing,1,9.85,61,North,0,9.85
+2020-03-02,Fjallraven - Foldsack No. 1 Ba,men's clothing,4,109.95,42,North,1,439.8
+2020-03-02,Mens Casual Premium Slim Fit T,men's clothing,1,22.3,53,East,0,22.3
+2020-03-02,Mens Cotton Jacket,men's clothing,6,55.99,59,North,0,335.94
+2020-01-02,Mens Casual Premium Slim Fit T,men's clothing,4,22.3,57,East,0,89.2
+2020-01-02,Fjallraven - Foldsack No. 1 Ba,men's clothing,10,109.95,30,North,0,1099.5
+2020-01-02,John Hardy Women's Legends Nag,jewelery,2,695.0,44,South,1,1390.0
+2020-03-01,Fjallraven - Foldsack No. 1 Ba,men's clothing,2,109.95,33,East,0,219.9
+2020-03-01,WD 2TB Elements Portable Exter,electronics,1,64.0,50,East,0,64.0
+2020-01-01,Fjallraven - Foldsack No. 1 Ba,men's clothing,4,109.95,39,West,1,439.8
+2020-03-01,White Gold Plated Princess,jewelery,1,9.99,54,West,1,9.99
+2020-03-01,Pierced Owl Rose Gold Plated S,jewelery,1,10.99,63,South,0,10.99
+2020-03-01,SanDisk SSD PLUS 1TB Internal ,electronics,2,109.0,18,South,0,218.0
+2020-03-01,WD 4TB Gaming Drive Works with,electronics,3,114.0,42,South,1,342.0
+2020-03-01,MBJ Women's Solid Short Sleeve,women's clothing,1,9.85,60,South,1,9.85

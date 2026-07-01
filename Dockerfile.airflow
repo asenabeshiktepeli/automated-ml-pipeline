@@ -1,0 +1,3 @@
+FROM apache/airflow:2.9.0
+RUN pip install --no-cache-dir ollama pandas numpy scipy scikit-learn mlflow duckdb dbt-core dbt-duckdb groq python-dotenv
+ 

@@ -1,0 +1,49 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 13:25:24
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+### Executive Summary:
+
+Our sales pipeline analysis reveals that our revenue is $4,691.27 with an average order value of $335.09 and a total number of orders at 14. However, we have a concerning return rate of 14.29%. Our top-performing product category is mens clothing, specifically the Fjallraven - Foldsack No. 1 Ba.
+
+### Key Business Insights:
+
+* **Revenue Growth Opportunities**: The average order value ($335.09) indicates potential for revenue growth through strategic marketing and pricing strategies.
+*   **Product Performance Analysis:** Our top-selling product (Fjallraven - Foldsack No. 1 Ba) suggests a strong demand in the mens clothing category, which could be leveraged to expand our offerings or optimize inventory management.
+
+### Risk Analysis:
+
+- The high return rate of 14.29% indicates potential quality control issues with products being returned at an alarming frequency.
+    This might suggest that there are some underlying problems within the supply chain and product development process
+
+### Model Performance Assessment:
+Our Return Prediction model shows a moderate accuracy level, which is not ideal for predictive analytics in business settings.
+
+- **Accuracy**: The return prediction model has achieved 66.67% overall accuracy
+-   Classification Report: Precision (0.33), Recall (0.50) and F1-score (0.40)
+
+### Top Actionable Recommendations:
+
+*    Implement a robust quality control process to reduce the high rate of returns.
+*     **Product Optimization**: Analyze customer reviews, ratings, and preferences for our top-selling products like Fjallraven - Foldsack No. 1 Ba to identify areas where we can improve or expand offerings in mens clothing category
+    *   Enhance product information on website with detailed specifications, high-quality images, and accurate sizing charts
+
+AGENT TREND ANALYSIS
+----------------------------------------
+Model performansımız geçen çalıştırmalara göre aynı kalıyor ve accuracy geçmişinde bir trend yok. Geçen raporlarda da benzer sonuçlar vardı. Hesaplama yapabilmek için daha fazla veri gereklidir.

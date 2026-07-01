@@ -1,0 +1,52 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-30 10:04:01
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary:**
+Our sales pipeline analysis reveals a mixed performance, with some promising trends and areas for improvement. Total revenue has increased to $4691.27, but the return rate remains high at 14.29%. Our machine learning model shows moderate accuracy in predicting returns.
+
+**Key Business Insights:**
+
+* **Top-performing category:** Mens clothing is driving sales, accounting for a significant portion of total orders.
+* **Product popularity:** The Fjallraven - Foldsack No. 1 Ba remains the top-selling product across all regions and categories.
+* **Regional performance:** North region accounts for nearly half (49%) of our customers.
+
+**Risk Analysis:**
+The high return rate is a concern, indicating potential issues with customer satisfaction or quality control in certain products or areas. This may lead to revenue losses if not addressed promptly.
+
+**Model Performance Assessment:**
+
+Our Return Prediction Model demonstrates moderate accuracy at 66.67%, but there's room for improvement:
+* The model relies heavily on product and region encodings (28% combined), suggesting that these factors are crucial in predicting returns.
+* However, the feature importance of customer age is relatively high (27%), indicating its significance.
+
+**Classification Report:**
+The classification report shows a 67.33% accuracy rate across three classes:
+	+ Class 0 (non-return): High precision and recall rates
+	+ Class 1 (return): Poor performance due to limited data points
+
+However, the weighted average f-score is low at 53%, indicating that our model requires refinement.
+
+**Top 3 Actionable Recommendations:**
+
+1. **Product Review:** Conduct a thorough review of top-selling products like Fjallraven - Foldsack No. 1 Ba and consider revising product offerings or improving quality control to reduce returns.
+2. **Regional Focus:** Develop targeted marketing campaigns for the North region, leveraging its high customer concentration to drive sales growth in this area.
+3. **Return Prediction Model Refinement:**
+	* Collect more data points on Class 1 (return) instances
+	+ Rebalance feature importance by incorporating additional relevant factors or revising existing weights

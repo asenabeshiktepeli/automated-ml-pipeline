@@ -13,7 +13,9 @@ services:
       - "5432:5432"
 
   airflow-init:
-    image: apache/airflow:2.9.0
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
     depends_on:
       - postgres
     environment:
@@ -28,7 +30,9 @@ services:
       --role Admin --email admin@pipeline.com"
 
   airflow-webserver:
-    image: apache/airflow:2.9.0
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
     depends_on:
       - postgres
       - airflow-init
@@ -37,14 +41,19 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__FERNET_KEY: "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg="
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: "mysecretkey123456789"
+      OLLAMA_HOST: "http://host.docker.internal:11434"
     volumes:
       - ./dags:/opt/airflow/dags
+      - .:/opt/airflow/dags/project
     ports:
       - "8080:8080"
     command: airflow webserver
 
   airflow-scheduler:
-    image: apache/airflow:2.9.0
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
     depends_on:
       - postgres
       - airflow-init
@@ -53,8 +62,11 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__FERNET_KEY: "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg="
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: "mysecretkey123456789"
+      OLLAMA_HOST: "http://host.docker.internal:11434"
     volumes:
       - ./dags:/opt/airflow/dags
+      - .:/opt/airflow/dags/project
     command: airflow scheduler
 
 volumes:

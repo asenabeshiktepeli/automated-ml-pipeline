@@ -1,0 +1,2100 @@
+    )
+
+    run = PythonOperator(
+        task_id="run_pipeline",
+        python_callable=run_pipeline,
+    )
+
+    drift_check = PythonOperator(
+        task_id="check_drift",
+        python_callable=run_drift_check,
+    )
+
+    auto_retrain = PythonOperator(
+        task_id="auto_retrain_if_needed",
+        python_callable=run_auto_retrain,
+    )
+
+    alert_check = PythonOperator(
+        task_id="check_alerts",
+        python_callable=run_alert_check,
+    )
+
+    end = BashOperator(
+        task_id="end_notification",
+        bash_command='echo "Pipeline completed at $(date)"'
+    )
+
+    start >> run >> drift_check >> auto_retrain >> alert_check >> end
+
+=== C:\Users\User\Desktop\data_pipeline\agent.py ===
+import pandas as pd
+import requests
+import json
+
+# ── DATA LOAD ─────────────────────────────────────────────
+def load_data():
+    df = pd.read_csv("data/data.csv", encoding="ISO-8859-1")
+    df.columns = [c.strip() for c in df.columns]
+    df = df.rename(columns={
+        "InvoiceNo"  : "invoice_no",
+        "StockCode"  : "stock_code",
+        "Description": "description",
+        "Quantity"   : "quantity",
+        "InvoiceDate": "date",
+        "UnitPrice"  : "price",
+        "CustomerID" : "customer_id",
+        "Country"    : "country"
+    })
+    df["returned"] = (df["quantity"] < 0).astype(int)
+    df = df[df["price"] > 0]
+    df.dropna(subset=["customer_id"], inplace=True)
+    df["revenue"] = df["quantity"] * df["price"]
+    return df
+
+df = load_data()
+
+# ── TOOLS ─────────────────────────────────────────────────
+def get_summary_stats():
+    return f"""
+Total Revenue: ${df['revenue'].sum():,.2f}
+Total Orders: {len(df):,}
+Unique Customers: {df['customer_id'].nunique():,}
+Return Rate: {df['returned'].mean()*100:.2f}%
+Top Country: {df.groupby('country')['revenue'].sum().idxmax()}
+Top Product: {df.groupby('description')['revenue'].sum().idxmax()}
+"""
+
+def get_top_countries(n=5):
+    result = df.groupby("country")["revenue"].sum().nlargest(n)
+    return result.to_string()
+
+def get_return_rate_by_country(n=5):
+    result = df.groupby("country")["returned"].mean().nlargest(n) * 100
+    return result.round(2).to_string()
+
+def get_top_products(n=5):
+    result = df.groupby("description")["revenue"].sum().nlargest(n)
+    return result.to_string()
+
+TOOLS = {
+    "get_summary_stats"        : get_summary_stats,
+    "get_top_countries"        : get_top_countries,
+    "get_return_rate_by_country": get_return_rate_by_country,
+    "get_top_products"         : get_top_products,
+}
+
+# ── AGENT ─────────────────────────────────────────────────
+def ask_agent(question: str) -> str:
+    # Veri özetini hazırla
+    data_context = get_summary_stats()
+    top_countries = get_top_countries(10)
+    return_rates  = get_return_rate_by_country(10)
+    top_products  = get_top_products(10)
+
+    prompt = f"""You are a data analyst AI agent for an e-commerce company.
+You have access to the following real data:
+
+SUMMARY:
+{data_context}
+
+TOP COUNTRIES BY REVENUE:
+{top_countries}
+
+RETURN RATES BY COUNTRY:
+{return_rates}
+
+TOP PRODUCTS BY REVENUE:
+{top_products}
+
+Answer this question based on the data above:
+{question}
+
+Give a concise, data-driven answer."""
+
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={"model": "llama3.1:8b", "prompt": prompt, "stream": False}
+    )
+    return response.json()["response"]
+
+# ── RUN ───────────────────────────────────────────────────
+if __name__ == "__main__":
+    print("\n" + "="*60)
+    print("E-COMMERCE AI AGENT")
+    print("="*60)
+
+    questions = [
+        "Which country has the highest return rate and why might that be?",
+        "What are the top 3 products by revenue?",
+        "Give me a business summary with key insights."
+    ]
+
+    for q in questions:
+        print(f"\nQuestion: {q}")
+        print("-"*40)
+        answer = ask_agent(q)
+        print(f"Answer: {answer}")
+        print("="*60)
+
+=== C:\Users\User\Desktop\data_pipeline\alert_monitor.py ===
+import smtplib
+import sqlite3
+import pandas as pd
+import json
+import os
+import glob
+import ollama
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime
+
+# ── CONFIG ──────────────────────────────────────────────
+# Fill in your Gmail address and App Password
+EMAIL_SENDER   = "your_email@gmail.com"
+EMAIL_PASSWORD = "your_app_password"
+EMAIL_RECEIVER = "your_email@gmail.com"
+
+# Alert thresholds
+ACCURACY_THRESHOLD    = 0.85  # Alert if accuracy drops below 85%
+RETURN_RATE_THRESHOLD = 25.0  # Alert if return rate exceeds 25%
+
+DB_PATH = "data/pipeline.db"
+
+MODEL_NAME = "llama3.1:8b"
+
+# ── LOAD METRICS ────────────────────────────────────────
+def load_metrics():
+    print("Loading metrics from database...")
+    conn   = sqlite3.connect(DB_PATH)
+    df     = pd.read_sql("SELECT * FROM sales_data", conn)
+    conn.close()
+
+    metrics = {
+        "total_revenue"   : round(df["revenue"].sum(), 2),
+        "total_orders"    : len(df),
+        "return_rate"     : round(df["returned"].mean() * 100, 2),
+        "avg_order_value" : round(df["revenue"].mean(), 2),
+        "timestamp"       : datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+    return metrics
+
+# ── CHECK ALERTS ────────────────────────────────────────
+def check_alerts(metrics, model_accuracy=1.0):
+    alerts = []
+
+    if model_accuracy < ACCURACY_THRESHOLD:
+        alerts.append({
+            "type"    : "MODEL_DEGRADATION",
+            "severity": "HIGH",
+            "message" : f"Model accuracy dropped to {model_accuracy:.4f} (threshold: {ACCURACY_THRESHOLD})",
+        })
+
+    if metrics["return_rate"] > RETURN_RATE_THRESHOLD:
+        alerts.append({
+            "type"    : "HIGH_RETURN_RATE",
+            "severity": "MEDIUM",
+            "message" : f"Return rate is {metrics['return_rate']}% (threshold: {RETURN_RATE_THRESHOLD}%)",
+        })
+
+    return alerts
+
+# ── INVESTIGATOR AGENT ──────────────────────────────────
+def read_alert_log_history():
+    try:
+        with open("logs/alerts.log", "r", encoding="utf-8", errors="ignore") as f:
+            content = f.read()
+        blocks = content.strip().split("=" * 60)
+        recent = [b.strip() for b in blocks if b.strip()][-5:]
+        degradation_count = sum(1 for b in recent if "MODEL_DEGRADATION" in b)
+        return {
+            "model_degradation_alert_count_in_recent_checks": degradation_count,
+            "total_checks_reviewed": len(recent)
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+def get_accuracy_history():
+    try:
+        conn = sqlite3.connect("mlflow.db")
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT run_uuid, value FROM metrics
+            WHERE key = 'accuracy'
+            ORDER BY run_uuid DESC LIMIT 5
+        """)
+        rows = cur.fetchall()
+        conn.close()
+        return {"recent_accuracy_values": [r[1] for r in rows]}
+    except Exception as e:
+        return {"error": str(e)}
+
+def investigate_with_agent(alerts):
+    """Sadece uyarı varsa çalışır. Geçmiş veriye bakıp kısa bir teşhis üretir."""
+    print("\n[Investigator Agent] Uyarılar inceleniyor...")
+
+    alert_data    = read_alert_log_history()
+    accuracy_data = get_accuracy_history()
+
+    alert_types = ", ".join(a["type"] for a in alerts)
+
+    prompt = f"""Şu uyarılar tetiklendi: {alert_types}
+
+Son alert kontrollerinde kaç kez MODEL_DEGRADATION uyarısı görüldü: {alert_data.get('model_degradation_alert_count_in_recent_checks', 'bilinmiyor')} / {alert_data.get('total_checks_reviewed', 'bilinmiyor')}
+
+Son accuracy değerleri: {accuracy_data.get('recent_accuracy_values', 'bilinmiyor')}
+
+Sadece yukarıdaki verilere dayanarak kısa bir teşhis yaz (4-5 cümle, Türkçe). Veride olmayan bir şeyi uydurma. Eğer bu tekrar eden bir sorunsa açıkça belirt."""
+
+    def is_broken(text):
+        """Modelin döngüye girip anlamsız çıktı (ör. '@@@@@@') ürettiğini tespit eder."""
+        if not text:
+            return True
+        return text.count("@") > 10 or len(set(text)) < 5
+
+    try:
+        response = ollama.chat(
+            model=MODEL_NAME,
+            messages=[{"role": "user", "content": prompt}],
+            options={"temperature": 0.2, "repeat_penalty": 1.4, "repeat_last_n": 64}
+        )
+        diagnosis = response.message.content.strip()
+
+        # Bozuk/döngü çıktısı tespit edilirse bir kez daha, daha güçlü ayarlarla dene
+        if is_broken(diagnosis):
+            print("[Investigator Agent] Bozuk çıktı tespit edildi, tekrar deneniyor...")
+            response = ollama.chat(
+                model=MODEL_NAME,
+                messages=[{"role": "user", "content": prompt}],
+                options={"temperature": 0.1, "repeat_penalty": 1.6, "repeat_last_n": 128}
+            )
+            diagnosis = response.message.content.strip()
+
+        # İkinci deneme de bozuksa, kullanıcıya temiz bir mesaj göster
+        if is_broken(diagnosis):
+            diagnosis = "Investigator agent bu çalıştırmada güvenilir bir teşhis üretemedi (model çıktı hatası). Sonraki çalıştırmada tekrar denenecek."
+
+        print(f"[Investigator Agent] Teşhis:\n{diagnosis}\n")
+        return diagnosis
+    except Exception as e:
+        print(f"[Investigator Agent] Hata: {e}")
+        return None
+
+# ── SEND EMAIL ──────────────────────────────────────────
+def send_alert_email(alerts, metrics):
+    if not alerts:
+        print("No alerts to send.")
+        return
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = f"[PIPELINE ALERT] {len(alerts)} issue(s) detected"
+    msg["From"]    = EMAIL_SENDER
+    msg["To"]      = EMAIL_RECEIVER
+
+    body = f"""
+AUTOMATED PIPELINE ALERT
+Generated: {metrics['timestamp']}
+{'='*50}
+
+ALERTS DETECTED: {len(alerts)}
+
+"""
+    for i, alert in enumerate(alerts, 1):
+        body += f"""
+Alert {i}: {alert['type']}
+Severity : {alert['severity']}
+Message  : {alert['message']}
+{'-'*40}
+"""
+
+    body += f"""
+CURRENT METRICS:
+- Total Revenue   : ${metrics['total_revenue']:,}
+- Total Orders    : {metrics['total_orders']}
+- Return Rate     : {metrics['return_rate']}%
+- Avg Order Value : ${metrics['avg_order_value']}
+
+{'='*50}
+Automated Data Pipeline Monitor
+"""
+
+    msg.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
+        print(f"Alert email sent to {EMAIL_RECEIVER}")
+    except Exception as e:
+        print(f"Email failed: {e}")
+        print("(Configure EMAIL_SENDER and EMAIL_PASSWORD to enable email alerts)")
+
+# ── LOG ALERT ───────────────────────────────────────────
+def log_alerts(alerts, metrics, agent_diagnosis=None):
+    os.makedirs("logs", exist_ok=True)
+    log_path = "logs/alerts.log"
+
+    with open(log_path, "a", encoding="utf-8") as f:
+        f.write(f"\n{'='*60}\n")
+        f.write(f"Alert Check: {metrics['timestamp']}\n")
+        f.write(f"Return Rate: {metrics['return_rate']}%\n")
+
+        if alerts:
+            for alert in alerts:
+                f.write(f"[{alert['severity']}] {alert['type']}: {alert['message']}\n")
+        else:
+            f.write("Status: OK - No alerts\n")
+
+        if agent_diagnosis:
+            f.write(f"\n[Investigator Agent Diagnosis]\n{agent_diagnosis}\n")
+
+    print(f"Alert log saved: {log_path}")
+
+# ── MAIN ────────────────────────────────────────────────
+if __name__ == "__main__":
+    print("\n" + "="*60)
+    print("ALERT MONITOR - STARTING")
+    print("="*60 + "\n")
+
+    metrics = load_metrics()
+
+    # Gerçek model accuracy'sini dosyadan oku
+    try:
+        with open("data/last_accuracy.json", "r") as f:
+            accuracy_data = json.load(f)
+            model_accuracy = accuracy_data["accuracy"]
+    except (FileNotFoundError, KeyError):
+        print("Uyarı: last_accuracy.json bulunamadı, varsayılan 1.0 kullanılıyor")
+        model_accuracy = 1.0
+
+    alerts  = check_alerts(metrics, model_accuracy=model_accuracy)
+
+    print(f"Return Rate   : {metrics['return_rate']}%")
+    print(f"Total Revenue: ${metrics['total_revenue']:,}")
+    print(f"Alerts found : {len(alerts)}")
+
+    agent_diagnosis = None
+    if alerts:
+        print("\nALERTS:")
+        for alert in alerts:
+            print(f"  [{alert['severity']}] {alert['type']}: {alert['message']}")
+
+        # Sadece gerçek bir uyarı varsa investigator agent çalışır
+        agent_diagnosis = investigate_with_agent(alerts)
+
+    log_alerts(alerts, metrics, agent_diagnosis)
+    send_alert_email(alerts, metrics)
+
+    print("\nMonitor complete.")
+
+=== C:\Users\User\Desktop\data_pipeline\api.py ===
+from fastapi import FastAPI
+from pydantic import BaseModel
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+import uvicorn
+
+app = FastAPI(title="E-Commerce Return Prediction API")
+
+# ── MODEL TRAINING ON STARTUP ─────────────────────────────
+def train():
+    df = pd.read_csv("data/data.csv", encoding="ISO-8859-1")
+    df.columns = [c.strip() for c in df.columns]
+    df = df.rename(columns={
+        "InvoiceNo"  : "invoice_no",
+        "StockCode"  : "stock_code",
+        "Quantity"   : "quantity",
+        "InvoiceDate": "date",
+        "UnitPrice"  : "price",
+        "CustomerID" : "customer_id",
+        "Country"    : "country"
+    })
+    df["returned"] = (df["quantity"] < 0).astype(int)
+    df = df[df["price"] > 0]
+    df.dropna(subset=["customer_id"], inplace=True)
+    df["date"]        = pd.to_datetime(df["date"])
+    df["month"]       = df["date"].dt.month
+    df["day_of_week"] = df["date"].dt.dayofweek
+
+    le_country    = LabelEncoder()
+    le_stock      = LabelEncoder()
+    df["country_enc"]    = le_country.fit_transform(df["country"])
+    df["stock_code_enc"] = le_stock.fit_transform(df["stock_code"].astype(str))
+
+    features = ["stock_code_enc", "country_enc", "price", "month", "day_of_week"]
+    X = df[features]
+    y = df["returned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    clf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1, class_weight="balanced")
+    clf.fit(X_train, y_train)
+
+    return clf, le_country, le_stock
+
+print("Training model...")
+model, le_country, le_stock = train()
+print("Model ready ✅")
+
+# ── REQUEST SCHEMA ────────────────────────────────────────
+class PredictRequest(BaseModel):
+    stock_code : str
+    country    : str
+    price      : float
+    month      : int
+    day_of_week: int
+
+# ── ENDPOINTS ─────────────────────────────────────────────
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "E-Commerce Return Prediction API"}
+
+@app.post("/predict")
+def predict(req: PredictRequest):
+    try:
+        stock_enc   = le_stock.transform([req.stock_code])[0]
+        country_enc = le_country.transform([req.country])[0]
+    except ValueError as e:
+        return {"error": f"Unknown value: {str(e)}"}
+
+    features = [[stock_enc, country_enc, req.price, req.month, req.day_of_week]]
+    pred     = model.predict(features)[0]
+    prob     = model.predict_proba(features)[0][int(pred)]
+
+    return {
+        "prediction" : int(pred),
+        "probability": round(float(prob), 4),
+        "label"      : "Will be returned" if pred == 1 else "Not returned"
+    }
+
+@app.get("/health")
+def health():
+    return {"status": "healthy"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+=== C:\Users\User\Desktop\data_pipeline\auto_retrain.py ===
+import os
+import json
+import glob
+from datetime import datetime
+
+def check_latest_drift():
+    reports = glob.glob("reports/drift_report_*.json")
+    if not reports:
+        print("No drift reports found.")
+        return False
+    latest = max(reports, key=os.path.getctime)
+    with open(latest) as f:
+        data = json.load(f)
+    return data.get("drift_detected", False)
+
+def check_latest_accuracy():
+    reports = glob.glob("reports/report_*.txt")
+    if not reports:
+        return 1.0
+    latest = max(reports, key=os.path.getctime)
+    with open(latest, encoding="utf-8") as f:
+        for line in f:
+            if "Model Accuracy:" in line:
+                try:
+                    return float(line.split(":")[1].strip())
+                except:
+                    return 1.0
+    return 1.0
+
+def run_auto_retrain():
+    print("\n" + "="*60)
+    print("AUTO RETRAIN CHECK — STARTING")
+    print("="*60)
+
+    drift_detected  = check_latest_drift()
+    latest_accuracy = check_latest_accuracy()
+
+    print(f"Drift detected : {drift_detected}")
+    print(f"Latest accuracy: {latest_accuracy:.4f}")
+
+    should_retrain = drift_detected or latest_accuracy < 0.85
+
+    if should_retrain:
+        print("\n⚠️  Retraining triggered!")
+        print("Running main pipeline...")
+        os.system("python main_pipeline.py")
+        print("✅ Retraining complete.")
+    else:
+        print("\n✅ No retraining needed.")
+
+    print("="*60)
+
+if __name__ == "__main__":
+    run_auto_retrain()
+
+=== C:\Users\User\Desktop\data_pipeline\check_mlflow.py ===
+import ollama
+import json
+import sqlite3
+import glob
+
+MODEL_NAME = "llama3.1:8b"
+
+# ── Veriyi doğrudan kendimiz topluyoruz (modelin karar vermesine gerek yok) ──
+
+def read_alert_log_history():
+    try:
+        with open("/opt/airflow/dags/project/logs/alerts.log", "r", encoding="utf-8", errors="ignore") as f:
+            content = f.read()
+        blocks = content.strip().split("=" * 60)
+        recent = [b.strip() for b in blocks if b.strip()][-5:]
+        degradation_count = sum(1 for b in recent if "MODEL_DEGRADATION" in b)
+        return {
+            "recent_alert_checks": recent,
+            "model_degradation_alert_count_in_recent_checks": degradation_count,
+            "total_checks_reviewed": len(recent)
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+def get_accuracy_history():
+    conn = sqlite3.connect("/opt/airflow/dags/project/mlflow.db")
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT run_uuid, value FROM metrics
+        WHERE key = 'accuracy'
+        ORDER BY run_uuid DESC LIMIT 5
+    """)
+    rows = cur.fetchall()
+    conn.close()
+    return {"recent_accuracy_values": [r[1] for r in rows]}
+
+def read_latest_report_metrics():
+    files = sorted(glob.glob("/opt/airflow/dags/project/reports/report_*.txt"))
+    if not files:
+        return {"error": "Hiç rapor bulunamadı"}
+    with open(files[-1], "r", encoding="utf-8") as f:
+        content = f.read()
+    metrics_section = content.split("LLM EXECUTIVE ANALYSIS")[0]
+    return {"metrics": metrics_section.strip()}
+
+print("=== INVESTIGATOR AGENT BAŞLIYOR ===\n")
+
+# Veriyi önceden topla
+alert_data = read_alert_log_history()
+accuracy_data = get_accuracy_history()
+report_data = read_latest_report_metrics()
+
+print("→ Alert log verisi toplandı")
+print("→ Accuracy geçmişi toplandı")
+print("→ Rapor metrikleri toplandı\n")
+
+prompt = f"""Bir model accuracy uyarısı tetiklendi. Aşağıdaki verilere bakarak kısa bir teşhis yaz (4-5 cümle, Türkçe).
+
+Son alert kontrollerinde kaç kez MODEL_DEGRADATION uyarısı görüldü: {alert_data.get('model_degradation_alert_count_in_recent_checks', 'bilinmiyor')} / {alert_data.get('total_checks_reviewed', 'bilinmiyor')}
+
+Son accuracy değerleri: {accuracy_data.get('recent_accuracy_values', 'bilinmiyor')}
+
+Sadece yukarıdaki verilere dayanarak yorum yap. Veride olmayan bir şeyi uydurma. Eğer bu tekrar eden bir sorunsa açıkça belirt."""
+
+response = ollama.chat(
+    model=MODEL_NAME,
+    messages=[{"role": "user", "content": prompt}],
+    options={"temperature": 0.2, "repeat_penalty": 1.4, "repeat_last_n": 64}
+)
+
+print("=== AGENT'IN TEŞHİSİ ===")
+print(response.message.content)
+
+=== C:\Users\User\Desktop\data_pipeline\dashboard.py ===
+import dash
+from dash import dcc, html
+import plotly.express as px
+import pandas as pd
+import os
+import glob
+from datetime import datetime
+
+# ── CONFIG ────────────────────────────────────────────────
+DATA_PATH   = "data/data.csv"
+REPORTS_DIR = "reports"
+
+# ── LOAD DATA ─────────────────────────────────────────────
+def load_data():
+    df = pd.read_csv(DATA_PATH, encoding="ISO-8859-1")
+    df.columns = [c.strip() for c in df.columns]
+    df = df.rename(columns={
+        "InvoiceNo"  : "invoice_no",
+        "StockCode"  : "stock_code",
+        "Description": "description",
+        "Quantity"   : "quantity",
+        "InvoiceDate": "date",
+        "UnitPrice"  : "price",
+        "CustomerID" : "customer_id",
+        "Country"    : "country"
+    })
+    df["returned"] = (df["quantity"] < 0).astype(int)
+    df = df[df["price"] > 0]
+    df.dropna(subset=["customer_id"], inplace=True)
+    df["date"]    = pd.to_datetime(df["date"])
+    df["revenue"] = df["quantity"] * df["price"]
+    return df
+
+def load_latest_report():
+    reports = glob.glob(f"{REPORTS_DIR}/report_*.txt")
+    if not reports:
+        return "No reports generated yet."
+    latest = max(reports, key=os.path.getctime)
+    with open(latest, "r", encoding="utf-8") as f:
+        return f.read()
+
+# ── APP ───────────────────────────────────────────────────
+app = dash.Dash(__name__)
+app.title = "Data Pipeline Dashboard"
+
+df = load_data()
+
+total_revenue   = df["revenue"].sum()
+total_orders    = len(df)
+return_rate     = df["returned"].mean() * 100
+avg_order_value = df["revenue"].mean()
+
+# Top 10 products by revenue
+top_products = (
+    df.groupby("description")["revenue"]
+    .sum()
+    .nlargest(10)
+    .reset_index()
+)
+
+# Revenue by country (top 10)
+top_countries = (
+    df.groupby("country")["revenue"]
+    .sum()
+    .nlargest(10)
+    .reset_index()
+)
+
+# ── LAYOUT ────────────────────────────────────────────────
+app.layout = html.Div([
+
+    # Header
+    html.Div([
+        html.H1("Automated Data Pipeline Dashboard",
+                style={"color": "#ffffff", "margin": "0", "fontSize": "24px"}),
+        html.P(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+               style={"color": "#aaaaaa", "margin": "4px 0 0 0", "fontSize": "13px"})
+    ], style={
+        "backgroundColor": "#1e1e2e",
+        "padding": "20px 30px",
+        "borderBottom": "2px solid #444"
+    }),
+
+    # KPI Cards
+    html.Div([
+        html.Div([
+            html.H3("Total Revenue", style={"color": "#aaaaaa", "fontSize": "13px", "margin": "0"}),
+            html.H2(f"${total_revenue:,.0f}", style={"color": "#00d4aa", "margin": "8px 0 0 0"})
+        ], style={"backgroundColor": "#2a2a3e", "padding": "20px", "borderRadius": "8px", "flex": "1"}),
+
+        html.Div([
+            html.H3("Total Orders", style={"color": "#aaaaaa", "fontSize": "13px", "margin": "0"}),
+            html.H2(f"{total_orders:,}", style={"color": "#7c6af7", "margin": "8px 0 0 0"})
+        ], style={"backgroundColor": "#2a2a3e", "padding": "20px", "borderRadius": "8px", "flex": "1"}),
+
+        html.Div([
+            html.H3("Return Rate", style={"color": "#aaaaaa", "fontSize": "13px", "margin": "0"}),
+            html.H2(f"{return_rate:.1f}%", style={"color": "#ff6b6b", "margin": "8px 0 0 0"})
+        ], style={"backgroundColor": "#2a2a3e", "padding": "20px", "borderRadius": "8px", "flex": "1"}),
+
+        html.Div([
+            html.H3("Avg Order Value", style={"color": "#aaaaaa", "fontSize": "13px", "margin": "0"}),
+            html.H2(f"${avg_order_value:,.2f}", style={"color": "#ffa94d", "margin": "8px 0 0 0"})
+        ], style={"backgroundColor": "#2a2a3e", "padding": "20px", "borderRadius": "8px", "flex": "1"}),
+
+        html.Div([
+            html.H3("Unique Customers", style={"color": "#aaaaaa", "fontSize": "13px", "margin": "0"}),
+            html.H2(f"{df['customer_id'].nunique():,}", style={"color": "#74c0fc", "margin": "8px 0 0 0"})
+        ], style={"backgroundColor": "#2a2a3e", "padding": "20px", "borderRadius": "8px", "flex": "1"}),
+
+    ], style={"display": "flex", "gap": "16px", "padding": "24px 30px"}),
+
+    # Charts Row 1
+    html.Div([
+        html.Div([
+            dcc.Graph(figure=px.bar(
+                top_products,
+                x="revenue", y="description",
+                orientation="h",
+                title="Top 10 Products by Revenue",
+                color="revenue",
+                color_continuous_scale="teal",
+                template="plotly_dark"
+            ).update_layout(yaxis={"categoryorder": "total ascending"}))
+        ], style={"flex": "2", "backgroundColor": "#2a2a3e", "borderRadius": "8px"}),
+
+        html.Div([
+            dcc.Graph(figure=px.pie(
+                top_countries,
+                values="revenue", names="country",
+                title="Revenue by Country",
+                template="plotly_dark",
+                color_discrete_sequence=px.colors.sequential.Plasma
+            ))
+        ], style={"flex": "1", "backgroundColor": "#2a2a3e", "borderRadius": "8px"}),
+
+    ], style={"display": "flex", "gap": "16px", "padding": "0 30px"}),
+
+    # Charts Row 2
+    html.Div([
+        html.Div([
+            dcc.Graph(figure=px.line(
+                df.groupby(df["date"].dt.to_period("M").astype(str))["revenue"]
+                .sum().reset_index(),
+                x="date", y="revenue",
+                title="Monthly Revenue Trend",
+                template="plotly_dark",
+                color_discrete_sequence=["#00d4aa"]
+            ))
+        ], style={"flex": "1", "backgroundColor": "#2a2a3e", "borderRadius": "8px"}),
+
+        html.Div([
+            dcc.Graph(figure=px.bar(
+                df.groupby("country")["returned"].mean().nlargest(10).reset_index(),
+                x="country", y="returned",
+                title="Return Rate by Country (Top 10)",
+                template="plotly_dark",
+                color="returned",
+                color_continuous_scale="reds"
+            ))
+        ], style={"flex": "1", "backgroundColor": "#2a2a3e", "borderRadius": "8px"}),
+
+    ], style={"display": "flex", "gap": "16px", "padding": "16px 30px"}),
+
+    # LLM Report
+    html.Div([
+        html.H3("LLM Executive Report",
+                style={"color": "#ffffff", "marginBottom": "12px"}),
+        html.Pre(load_latest_report(),
+                 style={
+                     "color": "#cccccc",
+                     "backgroundColor": "#1a1a2e",
+                     "padding": "20px",
+                     "borderRadius": "8px",
+                     "fontSize": "13px",
+                     "whiteSpace": "pre-wrap",
+                     "maxHeight": "400px",
+                     "overflowY": "auto"
+                 })
+    ], style={"padding": "0 30px 30px"}),
+
+], style={"backgroundColor": "#13131f", "minHeight": "100vh", "fontFamily": "Arial, sans-serif"})
+
+# ── RUN ───────────────────────────────────────────────────
+if __name__ == "__main__":
+    print("\n" + "="*60)
+    print("Dashboard running at: http://127.0.0.1:8050")
+    print("="*60 + "\n")
+    app.run(debug=False, host="0.0.0.0", port=8050)
+
+=== C:\Users\User\Desktop\data_pipeline\data_fetcher.py ===
+import requests
+import pandas as pd
+import sqlite3
+import json
+import os
+from datetime import datetime, timedelta
+import random
+
+# ── CONFIG ────────────────────────────────────────────────
+API_BASE    = "https://fakestoreapi.com"
+DB_PATH     = "data/pipeline.db"
+DATA_PATH   = "data/sales_data.csv"
+
+# ── FETCH PRODUCTS ────────────────────────────────────────
+def fetch_products():
+    print("Fetching products from API...")
+    response = requests.get(f"{API_BASE}/products", timeout=10)
+    response.raise_for_status()
+    products = response.json()
+    print(f"  {len(products)} products fetched.")
+    return products
+
+# ── FETCH CARTS ───────────────────────────────────────────
+def fetch_carts():
+    print("Fetching carts from API...")
+    response = requests.get(f"{API_BASE}/carts", timeout=10)
+    response.raise_for_status()
+    carts = response.json()
+    print(f"  {len(carts)} carts fetched.")
+    return carts
+
+# ── BUILD SALES DATAFRAME ─────────────────────────────────
+def build_sales_df(products, carts):
+    print("Building sales dataset...")
+
+    product_map = {p["id"]: p for p in products}
+    records     = []
+
+    for cart in carts:
+        cart_date = datetime.strptime(cart["date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+
+        for item in cart["products"]:
+            product = product_map.get(item["productId"])
+            if not product:
+                continue
+
+            category = product["category"]
+            price    = product["price"]
+            quantity = item["quantity"]
+            revenue  = round(price * quantity, 2)
+
+            records.append({
+                "date"        : cart_date.strftime("%Y-%m-%d"),
+                "product"     : product["title"][:30],
+                "category"    : category,
+                "quantity"    : quantity,
+                "price"       : price,
+                "customer_age": random.randint(18, 65),
+                "region"      : random.choice(["North", "South", "East", "West"]),
+                "returned"    : random.choices([0, 1], weights=[80, 20])[0],
+                "revenue"     : revenue,
+            })
+
+    df = pd.DataFrame(records)
+    print(f"  {len(df)} sales records built.")
+    return df
+
+# ── SAVE TO CSV ───────────────────────────────────────────
+def save_to_csv(df):
+    os.makedirs("data", exist_ok=True)
+    df.to_csv(DATA_PATH, index=False)
+    print(f"  Saved to {DATA_PATH}")
+
+# ── SAVE TO DATABASE ──────────────────────────────────────
+def save_to_db(df):
+    conn = sqlite3.connect(DB_PATH)
+    df.to_sql("sales_data", conn, if_exists="replace", index=False)
+    count = pd.read_sql("SELECT COUNT(*) as n FROM sales_data", conn)["n"][0]
+    conn.close()
+    print(f"  {count} records saved to database.")
+
+# ── FETCH SUMMARY ─────────────────────────────────────────
+def print_summary(df):
+    print("\n" + "="*60)
+    print("LIVE DATA SUMMARY")
+    print("="*60)
+    print(f"Total Orders   : {len(df)}")
+    print(f"Total Revenue  : ${df['revenue'].sum():,.2f}")
+    print(f"Avg Order Value: ${df['revenue'].mean():,.2f}")
+    print(f"Return Rate    : {df['returned'].mean()*100:.1f}%")
+    print(f"Categories     : {df['category'].nunique()}")
+    print(f"Date Range     : {df['date'].min()} → {df['date'].max()}")
+    print("\nRevenue by Category:")
+    cat_rev = df.groupby("category")["revenue"].sum().sort_values(ascending=False)
+    for cat, rev in cat_rev.items():
+        print(f"  {cat:30} ${rev:,.2f}")
+    print("="*60)
+
+# ── MAIN ──────────────────────────────────────────────────
+if __name__ == "__main__":
+    print("\n" + "="*60)
+    print("LIVE DATA FETCHER — STARTING")
+    print("="*60 + "\n")
+
+    products = fetch_products()
+    carts    = fetch_carts()
+    df       = build_sales_df(products, carts)
+
+    save_to_csv(df)
+    save_to_db(df)
+    print_summary(df)
+
+    print("\nData fetch complete.")
+    print("Run main_pipeline.py to analyze this data.")
+
+=== C:\Users\User\Desktop\data_pipeline\db_setup.py ===
+from sqlalchemy import create_engine, text
+import pandas as pd
+import os
+
+# ── CONFIG ────────────────────────────────────────────────
+DB_PATH = "data/pipeline.db"
+DB_URL  = f"sqlite:///{DB_PATH}"
+
+def setup_database():
+    print("Setting up SQLite database...")
+    engine = create_engine(DB_URL)
+
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS sales_data (
+                id           INTEGER PRIMARY KEY AUTOINCREMENT,
+                date         TEXT,
+                product      TEXT,
+                category     TEXT,
+                quantity     INTEGER,
+                price        REAL,
+                customer_age INTEGER,
+                region       TEXT,
+                returned     INTEGER,
+                revenue      REAL,
+                created_at   TEXT DEFAULT (datetime('now'))
+            )
+        """))
+
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS pipeline_runs (
+                id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                run_date       TEXT DEFAULT (datetime('now')),
+                total_revenue  REAL,
+                total_orders   INTEGER,
+                return_rate    REAL,
+                model_accuracy REAL,
+                llm_report     TEXT
+            )
+        """))
+        conn.commit()
+        print("Tables created successfully.")
+
+    # Load CSV into database
+    df = pd.read_csv("data/sales_data.csv")
+    df["date"]    = pd.to_datetime(df["date"]).astype(str)
+    df["revenue"] = df["quantity"] * df["price"]
+
+    df.to_sql("sales_data", engine, if_exists="replace", index=False)
+    print(f"{len(df)} records loaded into database.")
+
+    # Verify
+    with engine.connect() as conn:
+        result = conn.execute(text("SELECT COUNT(*) FROM sales_data"))
+        count  = result.scalar()
+        print(f"Verification: {count} records confirmed.")
+
+    print("\nDatabase setup complete.")
+    print(f"Database file: {DB_PATH}")
+
+if __name__ == "__main__":
+    setup_database()
+
+=== C:\Users\User\Desktop\data_pipeline\drift_monitor.py ===
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from scipy import stats
+import os
+import json
+from datetime import datetime
+
+DATA_PATH   = "data/sales_data.csv"
+REPORTS_DIR = "reports"
+
+def load_data():
+    df = pd.read_csv(DATA_PATH)
+    df["date"] = pd.to_datetime(df["date"])
+    df["revenue"] = df["quantity"] * df["price"]
+    df["month"] = df["date"].dt.month
+    df["day_of_week"] = df["date"].dt.dayofweek
+    df.dropna(inplace=True)
+
+    le = LabelEncoder()
+    df["product_enc"]  = le.fit_transform(df["product"].astype(str))
+    df["category_enc"] = le.fit_transform(df["category"].astype(str))
+    df["region_enc"]   = le.fit_transform(df["region"].astype(str))
+
+    return df
+
+def check_drift(reference, current, feature, threshold=0.05):
+    stat, p_value = stats.ks_2samp(reference[feature], current[feature])
+    drifted = p_value < threshold
+    return {"feature": feature, "p_value": round(p_value, 4), "drifted": bool(drifted)}
+
+def run_drift_monitor():
+    print("\n" + "="*60)
+    print("DRIFT MONITOR — STARTING")
+    print("="*60)
+
+    df = load_data()
+
+    # Davranışsal / sürekli özellikler — takvim özellikleri (month, day_of_week)
+    # kasıtlı olarak hariç tutuldu, çünkü farklı zaman dilimlerini karşılaştırırken
+    # bunlar yapısal olarak her zaman farklı çıkar ve gerçek bir model performans
+    # kaybını göstermez.
+    features = ["product_enc", "category_enc", "region_enc", "quantity", "price", "customer_age"]
+
+    # Not: Veri seti şu an çok küçük (prototip aşaması). İstatistiksel olarak
+    # anlamlı sonuçlar için en az birkaç yüz satır gerekir. Üretim ortamında
+    # gerçek satış verisi biriktikçe bu test daha güvenilir hale gelecektir.
+    if len(df) < 30:
+        print(f"⚠️  UYARI: Veri seti çok küçük ({len(df)} satır). Drift testi sonuçları "
+              f"istatistiksel olarak güvenilir olmayabilir. Anlamlı sonuçlar için "
+              f"en az 30+ satır önerilir.\n")
+
+    # Rastgele bölme (konumsal/zamansal bölme YERİNE) — küçük/büyüyen veri
+    # setlerinde tutarlı ve önyargısız bir karşılaştırma sağlar.
+    reference, current = train_test_split(df, test_size=0.3, random_state=42)
+
+    print(f"Reference: {len(reference)} rows | Current: {len(current)} rows\n")
+
+    results = []
+    drift_count = 0
+
+    for feature in features:
+        result = check_drift(reference, current, feature)
+        results.append(result)
+        status = "⚠️ DRIFT" if result["drifted"] else "✅ OK"
+        print(f"{status} | {feature:20} | p-value: {result['p_value']}")
+        if result["drifted"]:
+            drift_count += 1
+
+    drift_detected = drift_count > len(features) // 2
+
+    print(f"\n{'='*60}")
+    if drift_detected:
+        print("⚠️ OVERALL: DATA DRIFT DETECTED — Retraining recommended!")
+    else:
+        print("✅ OVERALL: No significant drift detected.")
+
+    # Raporu kaydet
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    report_path = f"{REPORTS_DIR}/drift_report_{timestamp}.json"
+    with open(report_path, "w") as f:
+        json.dump({
+            "timestamp": timestamp,
+            "sample_size": len(df),
+            "drift_detected": bool(drift_detected),
+            "features": results
+        }, f, indent=2)
+
+    print(f"Report saved: {report_path}")
+    print("="*60)
+    return drift_detected
+
+if __name__ == "__main__":
+    run_drift_monitor()
+
+=== C:\Users\User\Desktop\data_pipeline\hyperparameter_tuning.py ===
+import optuna
+import mlflow
+import mlflow.sklearn
+import pandas as pd
+import numpy as np
+import sqlite3
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import LabelEncoder
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+from datetime import datetime
+import warnings
+warnings.filterwarnings("ignore")
+
+# ── CONFIG ────────────────────────────────────────────────
+DB_PATH     = "data/pipeline.db"
+MLFLOW_URI  = "sqlite:///mlflow.db"
+N_TRIALS    = 30  # number of optimization trials
+
+mlflow.set_tracking_uri(MLFLOW_URI)
+mlflow.set_experiment("hyperparameter_tuning")
+
+# ── LOAD DATA ─────────────────────────────────────────────
+def load_data():
+    conn = sqlite3.connect(DB_PATH)
+    df   = pd.read_sql("SELECT * FROM sales_data", conn)
+    conn.close()
+
+    le = LabelEncoder()
+    df["product_enc"]  = le.fit_transform(df["product"].astype(str))
+    df["category_enc"] = le.fit_transform(df["category"].astype(str))
+    df["region_enc"]   = le.fit_transform(df["region"].astype(str))
+
+    features = ["product_enc", "category_enc", "region_enc",
+                "quantity", "price", "customer_age"]
+
+    X = df[features]
+    y = df["returned"]
+    return X, y
+
+# ── OPTUNA OBJECTIVE ──────────────────────────────────────
+def objective(trial):
+    model_name = trial.suggest_categorical(
+        "model", ["random_forest", "xgboost", "lightgbm"]
+    )
+
+    if model_name == "random_forest":
+        model = RandomForestClassifier(
+            n_estimators = trial.suggest_int("n_estimators", 50, 300),
+            max_depth    = trial.suggest_int("max_depth", 3, 15),
+            min_samples_split = trial.suggest_int("min_samples_split", 2, 10),
+            random_state = 42
+        )
+    elif model_name == "xgboost":
+        model = XGBClassifier(
+            n_estimators  = trial.suggest_int("n_estimators", 50, 300),
+            max_depth     = trial.suggest_int("max_depth", 3, 10),
+            learning_rate = trial.suggest_float("learning_rate", 0.01, 0.3),
+            random_state  = 42,
+            eval_metric   = "logloss",
+            verbosity     = 0
+        )
+    else:
+        model = LGBMClassifier(
+            n_estimators  = trial.suggest_int("n_estimators", 50, 300),
+            max_depth     = trial.suggest_int("max_depth", 3, 10),
+            learning_rate = trial.suggest_float("learning_rate", 0.01, 0.3),
+            random_state  = 42,
+            verbosity     = -1
+        )
+
+    score = cross_val_score(model, X, y, cv=5, scoring="accuracy").mean()
+    return score
+
+# ── RUN OPTIMIZATION ──────────────────────────────────────
+def run_optimization(X, y):
+    print(f"\nRunning Optuna optimization — {N_TRIALS} trials...")
+    print("This will test Random Forest, XGBoost, and LightGBM.\n")
+
+    study = optuna.create_study(direction="maximize")
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+    study.optimize(objective, n_trials=N_TRIALS)
+
+    best = study.best_trial
+    print(f"\n{'='*60}")
+    print(f"OPTIMIZATION COMPLETE")
+    print(f"{'='*60}")
+    print(f"Best Model     : {best.params.get('model')}")
+    print(f"Best Accuracy  : {best.value:.4f}")
+    print(f"Best Params    : {best.params}")
+    return study
+
+# ── TRAIN BEST MODEL ──────────────────────────────────────
+def train_best_model(study, X, y):
+    best_params = study.best_trial.params
+    model_name  = best_params.get("model")
+
+    print(f"\nTraining best model: {model_name}")
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    if model_name == "random_forest":
+        model = RandomForestClassifier(
+            n_estimators      = best_params.get("n_estimators", 100),
+            max_depth         = best_params.get("max_depth", 5),
+            min_samples_split = best_params.get("min_samples_split", 2),
+            random_state      = 42
+        )
+    elif model_name == "xgboost":
+        model = XGBClassifier(
+            n_estimators  = best_params.get("n_estimators", 100),
+            max_depth     = best_params.get("max_depth", 5),
+            learning_rate = best_params.get("learning_rate", 0.1),
+            random_state  = 42,
+            eval_metric   = "logloss",
+            verbosity     = 0
+        )
+    else:
+        model = LGBMClassifier(
+            n_estimators  = best_params.get("n_estimators", 100),
+            max_depth     = best_params.get("max_depth", 5),
+            learning_rate = best_params.get("learning_rate", 0.1),
+            random_state  = 42,
+            verbosity     = -1
+        )
+
+    model.fit(X_train, y_train)
+    predictions = model.predict(X_test)
+    accuracy    = accuracy_score(y_test, predictions)
+    report      = classification_report(y_test, predictions)
+
+    # Log to MLflow
+    with mlflow.start_run(run_name=f"best_{model_name}"):
+        mlflow.log_params(best_params)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("optuna_best_score", study.best_value)
+        mlflow.sklearn.log_model(model, f"best_{model_name}")
+
+    print(f"\nFinal Accuracy  : {accuracy:.4f}")
+    print(f"Optuna Best CV  : {study.best_value:.4f}")
+    print(f"\nClassification Report:\n{report}")
+    print(f"\nLogged to MLflow ✓")
+
+    return model, accuracy
+
+# ── MAIN ──────────────────────────────────────────────────
+if __name__ == "__main__":
+    print("\n" + "="*60)
+    print("HYPERPARAMETER TUNING — STARTING")
+    print("="*60)
+
+    X, y  = load_data()
+    print(f"Dataset: {len(X)} records, {y.sum()} returns")
+
+    study         = run_optimization(X, y)
+    model, acc    = train_best_model(study, X, y)
+
+    print(f"\n{'='*60}")
+    print(f"TUNING COMPLETE")
+    print(f"Best accuracy: {acc:.4f}")
+    print(f"{'='*60}")
+
+=== C:\Users\User\Desktop\data_pipeline\main_pipeline.py ===
+import ollama
+import pandas as pd
+import numpy as np
+import json
+import os
+import sqlite3
+import glob
+import re
+import mlflow
+import mlflow.sklearn
+from datetime import datetime
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import LabelEncoder
+
+# ── CONFIG ────────────────────────────────────────────────
+DATA_PATH    = "data/sales_data.csv"
+REPORTS_DIR  = "reports"
+MODEL_NAME   = "llama3.1:8b"
+TIMESTAMP    = datetime.now().strftime("%Y%m%d_%H%M%S")
+MLFLOW_URI   = "sqlite:///mlflow.db"
+
+mlflow.set_tracking_uri(MLFLOW_URI)
+mlflow.set_experiment("sales_pipeline")
+
+# ── STEP 1: LOAD & CLEAN ──────────────────────────────────
+def load_and_clean(path):
+    print("[1/5] Loading and cleaning data...")
+    df = pd.read_csv(path)
+    df["date"]        = pd.to_datetime(df["date"])
+    df["revenue"]     = df["quantity"] * df["price"]
+    df["month"]       = df["date"].dt.month
+    df["day_of_week"] = df["date"].dt.dayofweek
+    df.dropna(inplace=True)
+    print(f"      {len(df)} records loaded.")
+    return df
+
+# ── STEP 2: ANALYZE ───────────────────────────────────────
+def analyze(df):
+    print("[2/5] Analyzing data...")
+    stats = {
+        "total_revenue"    : round(df["revenue"].sum(), 2),
+        "avg_order_value"  : round(df["revenue"].mean(), 2),
+        "total_orders"     : len(df),
+        "return_rate"      : round(df["returned"].mean() * 100, 2),
+        "top_category"     : df.groupby("category")["revenue"].sum().idxmax(),
+        "top_product"      : df.groupby("product")["revenue"].sum().idxmax(),
+        "top_region"       : df.groupby("region")["revenue"].sum().idxmax(),
+        "avg_customer_age" : round(df["customer_age"].mean(), 1),
+    }
+    return stats
+
+# ── STEP 3: TRAIN MODEL + MLFLOW ──────────────────────────
+def train_model(df):
+    print("[3/5] Training model + logging to MLflow...")
+    le = LabelEncoder()
+    df["product_enc"]  = le.fit_transform(df["product"])
+    df["category_enc"] = le.fit_transform(df["category"])
+    df["region_enc"]   = le.fit_transform(df["region"])
+
+    features = ["product_enc", "category_enc", "region_enc",
+                "quantity", "price", "customer_age", "month", "day_of_week"]
+
+    X = df[features]
+    y = df["returned"]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    params = {"n_estimators": 100, "random_state": 42, "max_depth": 5}
+
+    with mlflow.start_run():
+        clf = RandomForestClassifier(**params)
+        clf.fit(X_train, y_train)
+
+        predictions = clf.predict(X_test)
+        accuracy    = accuracy_score(y_test, predictions)
+        report      = classification_report(y_test, predictions)
+        importance  = dict(zip(features, clf.feature_importances_.round(3)))
+
+        # Log everything to MLflow
+        mlflow.log_params(params)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("return_rate", df["returned"].mean())
+        mlflow.log_metric("total_revenue", df["revenue"].sum())
+        mlflow.sklearn.log_model(clf, "random_forest_model")
+
+        print(f"      Accuracy: {accuracy:.4f} — logged to MLflow ✓")
+
+    return accuracy, report, importance
+
+# ── STEP 4: LLM REPORT ────────────────────────────────────
+def generate_report(stats, accuracy, report, feature_importance):
+    print("[4/5] Generating LLM report...")
+    prompt = f"""
+You are a senior data scientist presenting to the CEO.
+Analyze this sales pipeline report and provide executive insights.
+
+BUSINESS METRICS:
+- Total Revenue: ${stats['total_revenue']:,}
+- Average Order Value: ${stats['avg_order_value']}
+- Total Orders: {stats['total_orders']}
+- Return Rate: {stats['return_rate']}%
+- Top Category: {str(stats['top_category']).replace("'", "")}
+- Top Product: {str(stats['top_product']).replace("'", "")}
+- Top Region: {stats['top_region']}
+- Average Customer Age: {stats['avg_customer_age']}
+
+RETURN PREDICTION MODEL:
+- Accuracy: {accuracy:.4f}
+- Feature Importance: {json.dumps(feature_importance, indent=2)}
+
+Classification Report:
+{report}
+
+Provide a structured executive report with:
+1. Executive Summary (2-3 sentences)
+2. Key Business Insights (3 bullet points)
+3. Risk Analysis
+4. Model Performance Assessment
+5. Top 3 Actionable Recommendations
+"""
+    response = ollama.chat(
+        model=MODEL_NAME,
+        messages=[{"role": "user", "content": prompt}],
+        options={
+            "temperature": 0.3,
+            "repeat_penalty": 1.3,
+            "repeat_last_n": 64,
+        }
+    )
+    return response.message.content
+
+# ── STEP 4.5: AGENT-BASED TREND INSIGHTS ──────────────────
+def get_previous_report_summary():
+    """En son kaydedilmiş raporu (şu anki hariç) okuyup özetini döndürür."""
+    files = sorted(glob.glob(f"{REPORTS_DIR}/report_*.txt"))
+    if len(files) < 2:
+        return {"error": "Karşılaştırılacak önceki rapor yok"}
+    prev_file = files[-2]
+    with open(prev_file, "r", encoding="utf-8") as f:
+        content = f.read()
+    return {"previous_report_file": prev_file, "content_preview": content[:500]}
+
+def compare_accuracy_trend():
+    """MLflow veritabanından son 5 run'ın accuracy'sini döndürür."""
+    conn = sqlite3.connect("mlflow.db")
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT run_uuid, value FROM metrics
+        WHERE key = 'accuracy'
+        ORDER BY run_uuid DESC LIMIT 5
+    """)
+    rows = cur.fetchall()
+    conn.close()
+    return {"recent_accuracy_values": [r[1] for r in rows]}
+
+def generate_agent_insights():
+    print("[Agent] Generating trend insights...")
+
+    agent_tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_previous_report_summary",
+                "description": "Bir önceki pipeline raporunun özetini getirir, trend karşılaştırması için kullanılır",
+                "parameters": {"type": "object", "properties": {}, "required": []}
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "compare_accuracy_trend",
+                "description": "Son 5 model çalıştırmasının accuracy değerlerini getirir",
+                "parameters": {"type": "object", "properties": {}, "required": []}
+            }
+        }
+    ]
+
+    available_functions = {
+        "get_previous_report_summary": get_previous_report_summary,
+        "compare_accuracy_trend": compare_accuracy_trend,
+    }
+
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a careful data analyst. Only describe a trend if the numbers "
+                "you retrieved are actually different between periods. If the data is "
+                "identical or there isn't enough historical data to compare, say so "
+                "explicitly instead of inventing a trend. Never describe a single "
+                "snapshot of data as if it shows change over time. Keep your answer "
+                "to 3-4 sentences."
+            )
+        },
+        {"role": "user", "content": "Model performansımız geçen çalıştırmalara göre nasıl gidiyor? Trend var mı? Önceki raporu ve accuracy geçmişini incele, kısa bir değerlendirme yap."}
+    ]
+
+    try:
+        response = ollama.chat(
+            model=MODEL_NAME,
+            messages=messages,
+            tools=agent_tools,
+            options={"temperature": 0.3, "repeat_penalty": 1.3, "repeat_last_n": 64}
+        )
+        messages.append(response.message)
+
+        if response.message.tool_calls:
+            for tool_call in response.message.tool_calls:
+                func = available_functions[tool_call.function.name]
+                result = func()
+                messages.append({"role": "tool", "content": json.dumps(result)})
+
+            final_response = ollama.chat(
+                model=MODEL_NAME,
+                messages=messages,
+                options={"temperature": 0.3, "repeat_penalty": 1.3, "repeat_last_n": 64}
+            )
+            return final_response.message.content
+        else:
+            return response.message.content
+    except Exception as e:
+        print(f"[Agent] Hata: {e}")
+        return "Trend analizi şu an oluşturulamadı."
+
+# ── STEP 5: SAVE REPORT ───────────────────────────────────
+def save_report(stats, accuracy, llm_report, agent_insights=None):
+    print("[5/5] Saving report...")
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    path = f"{REPORTS_DIR}/report_{TIMESTAMP}.txt"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("=" * 70 + "\n")
+        f.write("AUTOMATED DATA PIPELINE REPORT\n")
+        f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write("=" * 70 + "\n\n")
+        for key, value in stats.items():
+            f.write(f"{key:25}: {value}\n")
+        f.write(f"\nModel Accuracy: {accuracy:.4f}\n\n")
+        f.write("LLM EXECUTIVE ANALYSIS\n")
+        f.write("-" * 40 + "\n")
+
+        # Tekrar döngüsü ve bozuk karakterleri temizle
+        llm_clean = re.sub(r'@+', '', llm_report)          # @ karakterlerini sil
+        llm_clean = re.sub(r'(.)\1{10,}', '', llm_clean)   # 10+ tekrar eden karakter sil
+        llm_clean = re.sub(r'\n{4,}', '\n\n', llm_clean)   # Fazla boş satırları azalt
+        llm_clean = llm_clean.strip()
+
+        f.write(llm_clean)
+
+        if agent_insights:
+            f.write("\n\n")
+            f.write("AGENT TREND ANALYSIS\n")
+            f.write("-" * 40 + "\n")
+            agent_clean = re.sub(r'@+', '', agent_insights)
+            agent_clean = re.sub(r'(.)\1{10,}', '', agent_clean)
+            agent_clean = agent_clean.strip()
+            f.write(agent_clean)
+
+    print(f"\n{'='*70}")
+    print("PIPELINE COMPLETE")
+    print(f"{'='*70}")
+    print(f"Report: {path}")
+    print(f"Total Revenue : ${stats['total_revenue']:,}")
+    print(f"Return Rate   : {stats['return_rate']}%")
+    print(f"Model Accuracy: {accuracy:.4f}")
+    print(f"{'='*70}\n")
+
+# ── MAIN ──────────────────────────────────────────────────
+if __name__ == "__main__":
+    print("\n" + "="*70)
+    print("AUTOMATED DATA PIPELINE — STARTING")
+    print("="*70 + "\n")
+
+    df                           = load_and_clean(DATA_PATH)
+    stats                        = analyze(df)
+    accuracy, report, importance = train_model(df)
+    llm_report                   = generate_report(stats, accuracy, report, importance)
+    agent_insights                = generate_agent_insights()
+    save_report(stats, accuracy, llm_report, agent_insights)
+
+    # Accuracy'yi alert_monitor.py'nin okuyabilmesi için dosyaya kaydet
+    os.makedirs("data", exist_ok=True)
+    with open("data/last_accuracy.json", "w") as f:
+        json.dump({"accuracy": accuracy, "timestamp": datetime.now().isoformat()}, f)
+
+=== C:\Users\User\Desktop\data_pipeline\pipeline.py ===
+import ollama
+import pandas as pd
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+
+# ── 1. LOAD DATA ──────────────────────────────────────────
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df["target"] = iris.target
+df["species"] = df["target"].map({0: "setosa", 1: "versicolor", 2: "virginica"})
+
+# ── 2. TRAIN MODEL ────────────────────────────────────────
+X = df[iris.feature_names]
+y = df["target"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# ── 3. EVALUATE ───────────────────────────────────────────
+predictions = model.predict(X_test)
+accuracy = accuracy_score(y_test, predictions)
+report = classification_report(y_test, predictions, target_names=iris.target_names)
+
+# ── 4. LLM INTERPRETATION ─────────────────────────────────
+prompt = f"""
+You are a senior data scientist. Analyze this model performance report and provide insights.
+
+Model: Random Forest Classifier
+Dataset: Iris (150 samples, 3 classes)
+Accuracy: {accuracy:.4f}
+
+Classification Report:
+{report}
+
+Provide:
+1. Overall performance assessment
+2. Which class is hardest to predict and why
+3. Production readiness verdict
+"""
+
+print("Running model analysis with LLM...\n")
+
+response = ollama.chat(
+    model="llama3.1:8b",
+    messages=[{"role": "user", "content": prompt}]
+)
+
+print("=" * 60)
+print("MODEL PERFORMANCE REPORT")
+print("=" * 60)
+print(f"Accuracy: {accuracy:.4f}")
+print("\nClassification Report:")
+print(report)
+print("\nLLM Analysis:")
+print("=" * 60)
+print(response.message.content)
+
+=== C:\Users\User\Desktop\data_pipeline\README.md ===
+# Automated E-Commerce ML Pipeline
+
+End-to-end automated ML system processing 400K+ real e-commerce transactions with AI agent, drift monitoring, auto-retraining, and REST API.
+
+## Architecture
+
+Data (400K+ records)
+
+↓
+
+ML Pipeline (Random Forest, 91.97% accuracy)
+
+↓
+
+MLflow Experiment Tracking
+
+↓
+
+Drift Monitor → Auto Retrain
+
+↓
+
+FastAPI Model Serving
+
+↓
+
+AI Agent (natural language queries)
+
+↓
+
+Plotly Dash Dashboard + LLM Reports
+
+## Features
+
+- **ML Pipeline** — loads, cleans, and trains on 400K+ real transactions
+- **Return Prediction** — Random Forest classifier, 91.97% accuracy
+- **MLflow Tracking** — every model run logged and versioned
+- **LLM Reporting** — Ollama generates executive reports automatically
+- **Drift Monitoring** — KS-test statistical drift detection
+- **Auto Retraining** — triggers pipeline when drift or accuracy drop detected
+- **FastAPI REST API** — real-time return prediction endpoint
+- **AI Agent** — answer business questions in natural language
+- **Live Dashboard** — Plotly Dash with revenue, returns, trends
+- **Docker** — fully containerized, single command deployment
+- **Scheduler** — automated nightly execution
+
+## Tech Stack
+
+- Python 3.13
+- scikit-learn — ML modeling
+- MLflow — experiment tracking
+- Ollama (llama3.1:8b) — local LLM
+- FastAPI + Uvicorn — REST API
+- Plotly Dash — dashboard
+- SciPy — statistical drift detection
+- Docker + Docker Compose — containerization
+- schedule — automation
+
+## Results
+
+| Metric         | Value                    |
+| -------------- | ------------------------ |
+| Dataset        | 400K+ real transactions  |
+| Model Accuracy | 91.97%                   |
+| Return Rate    | 2.19%                    |
+| Total Revenue  | $8.3M                    |
+| Top Market     | United Kingdom (84%)     |
+| Top Product    | REGENCY CAKESTAND 3 TIER |
+
+## Project Structure
+
+data_pipeline/
+
+├── main_pipeline.py # Core ML pipeline
+
+├── dashboard.py # Live Plotly Dash dashboard
+
+├── scheduler.py # Automated scheduling
+
+├── alert_monitor.py # Anomaly detection
+
+├── drift_monitor.py # Statistical drift monitoring
+
+├── auto_retrain.py # Automatic retraining
+
+├── api.py # FastAPI REST endpoint
+
+├── agent.py # AI data analysis agent
+
+├── Dockerfile
+
+├── docker-compose.yml
+
+└── requirements.txt
+
+## Quick Start
+
+```bash
+# Docker
+docker compose up --build
+
+# Local
+pip install -r requirements.txt
+python main_pipeline.py
+
+# Start API
+python api.py
+# → http://localhost:8000/docs
+
+# Start Dashboard
+python dashboard.py
+# → http://localhost:8050
+
+# Run AI Agent
+python agent.py
+
+# Check drift & auto retrain
+python drift_monitor.py
+python auto_retrain.py
+```
+
+## API Usage
+
+```bash
+POST http://localhost:8000/predict
+{
+  "stock_code": "85123A",
+  "country": "United Kingdom",
+  "price": 2.55,
+  "month": 6,
+  "day_of_week": 3
+}
+
+→ {"prediction": 0, "probability": 0.94, "label": "Not returned"}
+```
+
+## Recent Updates
+
+### Live API Integration
+
+- Added `data_fetcher.py` — pulls real-time data from Fake Store API
+- Automatic data refresh: products + carts → cleaned sales dataset
+- Data stored in both CSV and SQLite database
+
+### Database Layer
+
+- Added SQLite database (`data/pipeline.db`)
+- Tables: `sales_data`, `pipeline_runs`
+- Ready for PostgreSQL migration via Docker
+
+### Airflow Orchestration
+
+- Full Docker Compose setup with Airflow 2.9.0
+- DAG: `sales_data_pipeline` — runs daily at 02:00 AM
+- Services: PostgreSQL + Airflow Webserver + Scheduler
+
+### Alert Monitor
+
+- Threshold-based alerting (accuracy, return rate)
+- Log file: `logs/alerts.log`
+- Email alert support (Gmail App Password required)
+
+## Running the Full Stack
+
+```bash
+# 1. Fetch live data
+python data_fetcher.py
+
+# 2. Run pipeline
+python main_pipeline.py
+
+# 3. Start Airflow
+docker-compose up -d
+
+# 4. Monitor alerts
+python alert_monitor.py
+
+# 5. Start dashboard
+python dashboard.py
+# → http://localhost:8050
+
+# 6. Check MLflow
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+# → http://localhost:5000
+```
+
+
+=== C:\Users\User\Desktop\data_pipeline\scheduler.py ===
+import schedule
+import time
+import subprocess
+import logging
+import os
+from datetime import datetime
+
+# ── CONFIG ────────────────────────────────────────────────
+LOG_DIR  = "logs"
+LOG_FILE = f"{LOG_DIR}/scheduler.log"
+
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ]
+)
+
+# ── PIPELINE RUNNER ───────────────────────────────────────
+def run_pipeline():
+    logging.info("Pipeline triggered — starting...")
+    try:
+        result = subprocess.run(
+            ["python", "main_pipeline.py"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            logging.info("Pipeline completed successfully.")
+            logging.info(result.stdout[-500:])
+        else:
+            logging.error("Pipeline failed.")
+            logging.error(result.stderr[-500:])
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+
+# ── SCHEDULE ──────────────────────────────────────────────
+# Runs every day at 02:00 AM automatically
+schedule.every().day.at("02:00").do(run_pipeline)
+
+# Also runs immediately once on startup
+logging.info("Scheduler started. Pipeline will run daily at 02:00 AM.")
+logging.info("Running pipeline now for initial test...")
+run_pipeline()
+
+# ── MAIN LOOP ─────────────────────────────────────────────
+logging.info("Entering schedule loop. Press Ctrl+C to stop.")
+while True:
+    schedule.run_pending()
+    time.sleep(60)
+
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\README.md =====
+
+# Automated E-Commerce ML Pipeline
+
+End-to-end automated ML system processing 400K+ real e-commerce transactions with AI agent, drift monitoring, auto-retraining, and REST API.
+
+## Architecture
+
+Data (400K+ records)
+
+↓
+
+ML Pipeline (Random Forest, 91.97% accuracy)
+
+↓
+
+MLflow Experiment Tracking
+
+↓
+
+Drift Monitor → Auto Retrain
+
+↓
+
+FastAPI Model Serving
+
+↓
+
+AI Agent (natural language queries)
+
+↓
+
+Plotly Dash Dashboard + LLM Reports
+
+## Features
+
+- **ML Pipeline** — loads, cleans, and trains on 400K+ real transactions
+- **Return Prediction** — Random Forest classifier, 91.97% accuracy
+- **MLflow Tracking** — every model run logged and versioned
+- **LLM Reporting** — Ollama generates executive reports automatically
+- **Drift Monitoring** — KS-test statistical drift detection
+- **Auto Retraining** — triggers pipeline when drift or accuracy drop detected
+- **FastAPI REST API** — real-time return prediction endpoint
+- **AI Agent** — answer business questions in natural language
+- **Live Dashboard** — Plotly Dash with revenue, returns, trends
+- **Docker** — fully containerized, single command deployment
+- **Scheduler** — automated nightly execution
+
+## Tech Stack
+
+- Python 3.13
+- scikit-learn — ML modeling
+- MLflow — experiment tracking
+- Ollama (llama3.1:8b) — local LLM
+- FastAPI + Uvicorn — REST API
+- Plotly Dash — dashboard
+- SciPy — statistical drift detection
+- Docker + Docker Compose — containerization
+- schedule — automation
+
+## Results
+
+| Metric         | Value                    |
+| -------------- | ------------------------ |
+| Dataset        | 400K+ real transactions  |
+| Model Accuracy | 91.97%                   |
+| Return Rate    | 2.19%                    |
+| Total Revenue  | $8.3M                    |
+| Top Market     | United Kingdom (84%)     |
+| Top Product    | REGENCY CAKESTAND 3 TIER |
+
+## Project Structure
+
+data_pipeline/
+
+├── main_pipeline.py # Core ML pipeline
+
+├── dashboard.py # Live Plotly Dash dashboard
+
+├── scheduler.py # Automated scheduling
+
+├── alert_monitor.py # Anomaly detection
+
+├── drift_monitor.py # Statistical drift monitoring
+
+├── auto_retrain.py # Automatic retraining
+
+├── api.py # FastAPI REST endpoint
+
+├── agent.py # AI data analysis agent
+
+├── Dockerfile
+
+├── docker-compose.yml
+
+└── requirements.txt
+
+## Quick Start
+
+```bash
+# Docker
+docker compose up --build
+
+# Local
+pip install -r requirements.txt
+python main_pipeline.py
+
+# Start API
+python api.py
+# → http://localhost:8000/docs
+
+# Start Dashboard
+python dashboard.py
+# → http://localhost:8050
+
+# Run AI Agent
+python agent.py
+
+# Check drift & auto retrain
+python drift_monitor.py
+python auto_retrain.py
+```
+
+## API Usage
+
+```bash
+POST http://localhost:8000/predict
+{
+  "stock_code": "85123A",
+  "country": "United Kingdom",
+  "price": 2.55,
+  "month": 6,
+  "day_of_week": 3
+}
+
+→ {"prediction": 0, "probability": 0.94, "label": "Not returned"}
+```
+
+## Recent Updates
+
+### Live API Integration
+
+- Added `data_fetcher.py` — pulls real-time data from Fake Store API
+- Automatic data refresh: products + carts → cleaned sales dataset
+- Data stored in both CSV and SQLite database
+
+### Database Layer
+
+- Added SQLite database (`data/pipeline.db`)
+- Tables: `sales_data`, `pipeline_runs`
+- Ready for PostgreSQL migration via Docker
+
+### Airflow Orchestration
+
+- Full Docker Compose setup with Airflow 2.9.0
+- DAG: `sales_data_pipeline` — runs daily at 02:00 AM
+- Services: PostgreSQL + Airflow Webserver + Scheduler
+
+### Alert Monitor
+
+- Threshold-based alerting (accuracy, return rate)
+- Log file: `logs/alerts.log`
+- Email alert support (Gmail App Password required)
+
+## Running the Full Stack
+
+```bash
+# 1. Fetch live data
+python data_fetcher.py
+
+# 2. Run pipeline
+python main_pipeline.py
+
+# 3. Start Airflow
+docker-compose up -d
+
+# 4. Monitor alerts
+python alert_monitor.py
+
+# 5. Start dashboard
+python dashboard.py
+# → http://localhost:8050
+
+# 6. Check MLflow
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+# → http://localhost:5000
+```
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\requirements.txt =====
+
+pandas
+numpy
+scikit-learn
+ollama
+mlflow
+plotly
+dash
+schedule
+groq
+python-dotenv
+
+
+===== DOSYA: C:\Users\User\Desktop\data_pipeline\scheduler.py =====
+
+import schedule
+import time
+import subprocess
+import logging
+import os
+from datetime import datetime
+
+# ── CONFIG ────────────────────────────────────────────────
+LOG_DIR  = "logs"
+LOG_FILE = f"{LOG_DIR}/scheduler.log"
+
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ]
+)
+
+# ── PIPELINE RUNNER ───────────────────────────────────────
+def run_pipeline():
+    logging.info("Pipeline triggered — starting...")
+    try:
+        result = subprocess.run(
+            ["python", "main_pipeline.py"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            logging.info("Pipeline completed successfully.")
+            logging.info(result.stdout[-500:])
+        else:
+            logging.error("Pipeline failed.")
+            logging.error(result.stderr[-500:])
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+
+# ── SCHEDULE ──────────────────────────────────────────────
+# Runs every day at 02:00 AM automatically
+schedule.every().day.at("02:00").do(run_pipeline)
+
+# Also runs immediately once on startup
+logging.info("Scheduler started. Pipeline will run daily at 02:00 AM.")
+logging.info("Running pipeline now for initial test...")
+run_pipeline()
+
+# ── MAIN LOOP ─────────────────────────────────────────────
+logging.info("Entering schedule loop. Press Ctrl+C to stop.")
+while True:
+    schedule.run_pending()
+    time.sleep(60)

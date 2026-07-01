@@ -1,0 +1,26 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-06-27 13:53:05
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 14.29
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : North
+avg_customer_age         : 42.9
+
+Model Accuracy: 0.6667
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Report**
+
+**Executive Summary**
+Our sales pipeline analysis reveals a total revenue of $4,691.27 with an average order value of $335.09, indicating a moderate level of sales activity. However, the return rate is higher than expected at 14.29%, warranting closer examination of our customer satisfaction and product offerings. The data also suggests potential opportunities for growth in our top-performing categories and regions.
+
+**Key Business Insights**
+
+* **Category and Product Performance**: Men's clothing accounts for a significant portion of sales, with the F@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

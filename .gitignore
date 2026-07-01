@@ -1,5 +1,15 @@
-venv/
+﻿venv/
 __pycache__/
-mlruns/
 *.pyc
 .env
+mlruns/
+mlartifacts/
+data/*.csv
+data/*.parquet
+data/warehouse.duckdb
+*.duckdb
+mlflow.db
+mlflow_backup.db
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/

@@ -1,0 +1,15 @@
+﻿version: 2
+
+models:
+  - name: stg_retail
+    description: "Cleaned raw retail transactions, one row per order line"
+    columns:
+      - name: invoice_no
+        tests:
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: price
+        tests:
+          - not_null

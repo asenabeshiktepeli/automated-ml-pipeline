@@ -1,0 +1,22 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-07-01 10:57:24
+======================================================================
+
+total_revenue            : 4691.27
+avg_order_value          : 335.09
+total_orders             : 14
+return_rate              : 42.86
+top_category             : men's clothing
+top_product              : Fjallraven - Foldsack No. 1 Ba
+top_region               : South
+avg_customer_age         : 46.0
+
+Model Accuracy: 0.3333
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+
+
+AGENT TREND ANALYSIS
+----------------------------------------
