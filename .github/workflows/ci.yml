@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      GROQ_API_KEY: "dummy-key-for-ci-testing-only"
 
     steps:
       - name: Checkout code
