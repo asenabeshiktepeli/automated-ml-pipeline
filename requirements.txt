@@ -1,4 +1,4 @@
-pandas
+﻿pandas
 numpy
 scikit-learn
 ollama
@@ -7,4 +7,5 @@ plotly
 dash
 schedule
 groq
-python-dotenvpytest
+python-dotenv
+pytest
