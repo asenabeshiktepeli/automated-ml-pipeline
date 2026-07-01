@@ -1,0 +1,39 @@
+======================================================================
+AUTOMATED DATA PIPELINE REPORT
+Generated: 2026-07-01 14:12:27
+======================================================================
+
+total_revenue            : 8300065.81
+avg_order_value          : 20.4
+total_orders             : 406789
+return_rate              : 2.19
+top_category             : SET
+top_product              : REGENCY CAKESTAND 3 TIER
+top_region               : United Kingdom
+
+Model Accuracy: 0.7993
+
+LLM EXECUTIVE ANALYSIS
+----------------------------------------
+**Executive Summary**
+Our sales pipeline report indicates a total revenue of $8.3 million, with an average order value of $20.4 and a return rate of 2.19%. The top-performing category is SET, with the REGENCY CAKESTAND 3 TIER being the best-selling product, primarily in the United Kingdom. Our return prediction model has an accuracy of 79.93%, providing valuable insights to optimize our sales strategy.
+
+**Key Business Insights**
+* The United Kingdom is our top-performing region, indicating a strong market presence and potential for further growth.
+* The REGENCY CAKESTAND 3 TIER is our top-selling product, suggesting a high demand for this item and opportunities to cross-sell or upsell related products.
+* The return rate of 2.19% is relatively low, indicating a high level of customer satisfaction, but still leaving room for improvement in terms of product quality and customer experience.
+
+**Risk Analysis**
+Our return prediction model highlights the importance of customer-related features, such as customer prior orders, average order value, return rate, and recency days, which account for approximately 80% of the feature importance. This suggests that our sales strategy is heavily dependent on customer behavior and loyalty. However, the model's relatively low precision for predicting returns (9%) indicates a risk of overestimating the likelihood of returns, potentially leading to unnecessary inventory adjustments or customer interventions.
+
+**Model Performance Assessment**
+Our return prediction model has an accuracy of 79.93%, which is a good starting point, but there is still room for improvement. The classification report indicates a high precision for non-returns (100%) but a low precision for returns (9%), suggesting that the model is biased towards predicting non-returns. The macro average f1-score is 0.53, indicating a need for further model tuning and feature engineering to improve the model's overall performance.
+
+**Top 3 Actionable Recommendations**
+1. **Optimize Product Offerings**: Focus on expanding the SET category and related products, such as the REGENCY CAKESTAND 3 TIER, to capitalize on their popularity and increase average order value.
+2. **Enhance Customer Experience**: Develop targeted marketing campaigns and loyalty programs to improve customer retention and reduce return rates, particularly in the United Kingdom, where our customer base is strongest.
+3. **Refine Return Prediction Model**: Continue to refine the return prediction model by incorporating additional features, such as product quality metrics, customer feedback, and market trends, to improve its accuracy and reduce the risk of overestimating returns.
+
+AGENT TREND ANALYSIS
+----------------------------------------
+Model performansÄ±mÄ±zÄ±n trendini belirlemek için Ã¶nceki raporlarÄ± ve accuracy geÃ§miÅŸini inceledim. Ã–nceki raporlara gÃ¶re model performansÄ±mÄ±zÄ±n bir trendi yok gibi gÃ¶rÃ¼nÃ¼yor, Ã§Ã¼nkÃ¼ Ã¶nceki raporlarda da benzer accuracy deÄŸerleri gÃ¶rÃ¼lÃ¼yor. Ã–rneÄŸin, Ã¶nceki raporlarda model accuracy 76.44% olarak kaydedilmiÅŸ, ancak son raporlarda da benzer deÄŸerler gÃ¶rÃ¼lÃ¼yor. Bu nedenle, model performansÄ±mÄ±zÄ±n bir trendi yok gibi gÃ¶rÃ¼nÃ¼yor.
