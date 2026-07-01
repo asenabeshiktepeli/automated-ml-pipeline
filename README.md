@@ -2,6 +2,75 @@
 
 End-to-end automated ML system processing 400K+ real e-commerce transactions with AI agent, drift monitoring, auto-retraining, and REST API.
 
+## 🚀 Live API
+
+The prediction API is deployed and publicly accessible:
+
+**Base URL:** https://automated-ml-pipeline-gf15.onrender.com
+
+- `GET /` — health/status check
+- `GET /health` — health check
+- `GET /docs` — interactive Swagger UI (try it in the browser)
+- `POST /predict` — return prediction endpoint
+
+> ⚠️ **Note:** This runs on Render's free tier, which spins down after periods of inactivity. The first request after idle time may take up to ~50 seconds while the instance wakes up — subsequent requests are fast.
+
+### Try it in the browser
+
+Open [https://automated-ml-pipeline-gf15.onrender.com/docs](https://automated-ml-pipeline-gf15.onrender.com/docs) and use the Swagger UI to test `/predict` interactively.
+
+### Try it with curl
+
+```bash
+curl -X POST https://automated-ml-pipeline-gf15.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product": " I LOVE LONDON MINI BACKPACK",
+    "category": "CHRISTMAS",
+    "region": "United Kingdom",
+    "quantity_abs": 1,
+    "price": 15.5,
+    "month": 12,
+    "day_of_week": 3,
+    "customer_prior_orders": 5,
+    "customer_avg_order_value": 120,
+    "customer_return_rate": 0.15,
+    "customer_recency_days": 20
+  }'
+```
+
+### Try it with PowerShell
+
+```powershell
+$body = @{
+    product = " I LOVE LONDON MINI BACKPACK"
+    category = "CHRISTMAS"
+    region = "United Kingdom"
+    quantity_abs = 1
+    price = 15.5
+    month = 12
+    day_of_week = 3
+    customer_prior_orders = 5
+    customer_avg_order_value = 120
+    customer_return_rate = 0.15
+    customer_recency_days = 20
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "https://automated-ml-pipeline-gf15.onrender.com/predict" -Method Post -Body $body -ContentType "application/json"
+```
+
+**Example response:**
+
+```json
+{
+  "prediction": 1,
+  "probability": 0.9526,
+  "label": "Will be returned"
+}
+```
+
+> `product`, `category`, and `region` must match values the model's encoders were trained on. Unrecognized values will return an error.
+
 ## Architecture
 
 Data (400K+ records)
@@ -20,7 +89,7 @@ Drift Monitor → Auto Retrain
 
 ↓
 
-FastAPI Model Serving
+FastAPI Model Serving (deployed on Render)
 
 ↓
 
@@ -38,23 +107,25 @@ Plotly Dash Dashboard + LLM Reports
 - **LLM Reporting** — Ollama generates executive reports automatically
 - **Drift Monitoring** — KS-test statistical drift detection
 - **Auto Retraining** — triggers pipeline when drift or accuracy drop detected
-- **FastAPI REST API** — real-time return prediction endpoint
+- **FastAPI REST API** — real-time return prediction endpoint, deployed live on Render
 - **AI Agent** — answer business questions in natural language
 - **Live Dashboard** — Plotly Dash with revenue, returns, trends
 - **Docker** — fully containerized, single command deployment
 - **Scheduler** — automated nightly execution
+- **CI/CD** — GitHub Actions running pytest on every push
 
 ## Tech Stack
 
 - Python 3.13
 - scikit-learn — ML modeling
-- MLflow — experiment tracking
+- MLflow (mlflow-skinny for serving) — experiment tracking & model loading
 - Ollama (llama3.1:8b) — local LLM
 - FastAPI + Uvicorn — REST API
 - Plotly Dash — dashboard
 - SciPy — statistical drift detection
 - Docker + Docker Compose — containerization
 - schedule — automation
+- Render — cloud deployment for the prediction API
 
 ## Results
 
@@ -83,13 +154,17 @@ data_pipeline/
 
 ├── auto_retrain.py # Automatic retraining
 
-├── api.py # FastAPI REST endpoint
+├── api.py # FastAPI REST endpoint (deployed on Render)
 
 ├── agent.py # AI data analysis agent
+
+├── model/ # Serialized model + encoders (loaded directly by api.py)
 
 ├── Dockerfile
 
 ├── docker-compose.yml
+
+├── Procfile # Render start command
 
 └── requirements.txt
 
@@ -121,20 +196,54 @@ python auto_retrain.py
 
 ## API Usage
 
+### Local
+
 ```bash
 POST http://localhost:8000/predict
-{
-  "stock_code": "85123A",
-  "country": "United Kingdom",
-  "price": 2.55,
-  "month": 6,
-  "day_of_week": 3
-}
+```
 
-→ {"prediction": 0, "probability": 0.94, "label": "Not returned"}
+### Live (deployed)
+
+```bash
+POST https://automated-ml-pipeline-gf15.onrender.com/predict
+```
+
+**Request body:**
+
+```json
+{
+  "product": " I LOVE LONDON MINI BACKPACK",
+  "category": "CHRISTMAS",
+  "region": "United Kingdom",
+  "quantity_abs": 1,
+  "price": 15.5,
+  "month": 12,
+  "day_of_week": 3,
+  "customer_prior_orders": 5,
+  "customer_avg_order_value": 120,
+  "customer_return_rate": 0.15,
+  "customer_recency_days": 20
+}
+```
+
+**Response:**
+
+```json
+{
+  "prediction": 1,
+  "probability": 0.9526,
+  "label": "Will be returned"
+}
 ```
 
 ## Recent Updates
+
+### Cloud Deployment
+
+- API deployed live to Render (`api.py` runs independently of any local MLflow tracking server)
+- Model and encoders are serialized and bundled directly under `model/`, loaded from disk at startup
+- `requirements.txt` trimmed to only what the API needs (`mlflow-skinny` instead of full `mlflow`, plus `pandas`, `scikit-learn`, `skops`, `fastapi`, `uvicorn`, `pydantic`, `joblib`, `numpy`)
+- `Procfile` defines the Render start command: `uvicorn api:app --host 0.0.0.0 --port $PORT`
 
 ### Live API Integration
 
