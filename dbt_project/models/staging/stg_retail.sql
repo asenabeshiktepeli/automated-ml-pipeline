@@ -9,7 +9,7 @@ select
     "UnitPrice"    as price,
     "CustomerID"   as customer_id,
     "Country"      as region
-from read_parquet('data/retail_data.parquet')
+from read_parquet('../data/retail_data.parquet')
 where "CustomerID" is not null
   and "Description" is not null
   and "UnitPrice" > 0

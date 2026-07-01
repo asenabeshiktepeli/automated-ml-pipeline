@@ -25,25 +25,25 @@ customer_features as (
         *,
         count(*) over (
             partition by customer_id
-            order by invoice_date, invoice_no
+            order by invoice_date, invoice_no, stock_code
             rows between unbounded preceding and 1 preceding
         ) as customer_prior_orders,
 
         avg(revenue) over (
             partition by customer_id
-            order by invoice_date, invoice_no
+            order by invoice_date, invoice_no, stock_code
             rows between unbounded preceding and 1 preceding
         ) as customer_avg_order_value_raw,
 
         avg(returned) over (
             partition by customer_id
-            order by invoice_date, invoice_no
+            order by invoice_date, invoice_no, stock_code
             rows between unbounded preceding and 1 preceding
         ) as customer_return_rate_raw,
 
         lag(invoice_date) over (
             partition by customer_id
-            order by invoice_date, invoice_no
+            order by invoice_date, invoice_no, stock_code
         ) as previous_invoice_date
     from base
 )

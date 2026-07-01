@@ -51,10 +51,19 @@ def run_drift_monitor():
               f"istatistiksel olarak güvenilir olmayabilir. Anlamlı sonuçlar için "
               f"en az 30+ satır önerilir.\n")
 
-    # Rastgele bölme (konumsal/zamansal bölme YERİNE) — küçük/büyüyen veri
-    # setlerinde tutarlı ve önyargısız bir karşılaştırma sağlar.
-    reference, current = train_test_split(df, test_size=0.3, random_state=42)
+    # Zaman bazlı bölme — drift testinin amacı zaman içindeki değişimi
+    # yakalamaktır. Rastgele bölme aynı dağılımdan iki örnek üretir ve
+    # gerçek drift'i sistematik olarak gizler (KS-testi neredeyse hep "OK" döner).
+    # DRIFT_SPLIT_MODE=random ile eski davranışa geri dönülebilir (geriye uyumluluk).
+    split_mode = os.environ.get("DRIFT_SPLIT_MODE", "temporal")
 
+    if split_mode == "temporal":
+        df_sorted = df.sort_values("date")
+        cutoff = df_sorted["date"].quantile(0.7)
+        reference = df_sorted[df_sorted["date"] <= cutoff]
+        current = df_sorted[df_sorted["date"] > cutoff]
+    else:
+        reference, current = train_test_split(df, test_size=0.3, random_state=42)
     print(f"Reference: {len(reference)} rows | Current: {len(current)} rows\n")
 
     results = []
